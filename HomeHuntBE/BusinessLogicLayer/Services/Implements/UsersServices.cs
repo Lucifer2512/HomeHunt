@@ -70,7 +70,7 @@ namespace BusinessLogicLayer.Services.Implements
 		{
 			// Truy vấn người dùng từ cơ sở dữ liệu theo tên người dùng
 			var user = await _unitOfWork.Repository<User>()
-				.FindAsync(predicate: u => u.Email == email);
+				.FindAsync(u => u.Email == email);
 
 			return user;
 		}
