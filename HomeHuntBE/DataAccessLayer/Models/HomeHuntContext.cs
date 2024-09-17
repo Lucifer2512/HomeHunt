@@ -44,6 +44,18 @@ public partial class HomeHuntContext : DbContext
                 .HasMaxLength(255);
         });
 
+        //modelBuilder.Entity<Room>(entity =>
+        //{
+        //    entity.HasKey(e => e.Id).HasName("rome_id_primary");
+
+        //    entity.ToTable("Room");
+
+        //    entity.Property(e => e.Id).ValueGeneratedNever();
+        //    entity.Property(e => e.Name)
+        //        .IsRequired()
+        //        .HasMaxLength(255);
+        //});
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("user_id_primary");
