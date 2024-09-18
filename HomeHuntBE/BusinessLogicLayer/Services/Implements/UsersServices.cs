@@ -94,6 +94,7 @@ namespace BusinessLogicLayer.Services.Implements
                 Address = user.Address,
                 PhoneNumber = user.PhoneNumber,
                 Gender = user.Gender,
+				RoleName = user.Role.Name,
 				RatingCount = user.Rating,
             };
 

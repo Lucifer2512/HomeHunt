@@ -126,14 +126,18 @@ namespace BusinessLogicLayer.Services.Implements
 
             var user = new User()
             {
+                Id = Guid.NewGuid(),
                 Address = registerModel.Address,
                 RoleId = 2,
                 FullName = registerModel.FullName,
                 Email = registerModel.Email,
                 Password = HashPassword(registerModel.Password),
-                Dob = registerModel.Dob,
+                Dob = DateTime.Now,
                 PhoneNumber = registerModel.PhoneNumber,
                 Gender = registerModel.Gender,
+                UpdatedDate = DateTime.UtcNow,
+                CreatedDate = DateTime.UtcNow,
+                Rating = 0,
                 Status = true,
             };
 

@@ -14,10 +14,9 @@ namespace BusinessLogicLayer.ResponseModels
 		public DateTime Dob { get; set; }
 		public string Address { get; set; } = null!;
 		public string PhoneNumber { get; set; } = null!;
-		public int RoleId { get; set; }
-		public string Gender { get; set; }
-	
-	}
+		public string Gender { get; set; } = null!;
+
+    }
     public class UserDetailResponse : UsersResponseModel
     {
         public double RatingCount { get; set; }

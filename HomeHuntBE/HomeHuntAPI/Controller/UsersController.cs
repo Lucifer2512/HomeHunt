@@ -12,6 +12,7 @@ using BusinessLogicLayer.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Drawing;
+using BusinessLogicLayer.ResponseModels;
 
 namespace HomeHuntAPI.Controllers
 {
