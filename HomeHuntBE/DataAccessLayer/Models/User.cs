@@ -31,7 +31,7 @@ public partial class User
 
     public bool Status { get; set; }
 
-    public Guid RoleId { get; set; }
+    public int RoleId { get; set; }
 
     public virtual Role Role { get; set; }
 }
