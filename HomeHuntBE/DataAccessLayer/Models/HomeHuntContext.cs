@@ -14,7 +14,7 @@ public partial class HomeHuntContext : DbContext
     {
     }
 
-    public virtual DbSet<Application> Applications { get; set; }
+    public virtual DbSet<RoomApplication> Applications { get; set; }
 
     public virtual DbSet<House> Houses { get; set; }
 
@@ -42,7 +42,7 @@ public partial class HomeHuntContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Application>(entity =>
+        modelBuilder.Entity<RoomApplication>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("application_id_primary");
 

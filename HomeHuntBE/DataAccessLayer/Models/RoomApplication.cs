@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.Models;
 
-public partial class Application
+public partial class RoomApplication
 {
     public Guid Id { get; set; }
 
