@@ -14,7 +14,17 @@ public partial class HomeHuntContext : DbContext
     {
     }
 
+    public virtual DbSet<Application> Applications { get; set; }
+
+    public virtual DbSet<House> Houses { get; set; }
+
+    public virtual DbSet<Post> Posts { get; set; }
+
+    public virtual DbSet<Rating> Ratings { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<Room> Rooms { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -32,6 +42,103 @@ public partial class HomeHuntContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Application>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("application_id_primary");
+
+            entity.ToTable("Application");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Dob)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.FullName)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Gender)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Applications)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("application_userid_foreign");
+        });
+
+        modelBuilder.Entity<House>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("house_id_primary");
+
+            entity.ToTable("House");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Address)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.City)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.District)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Ward)
+                .IsRequired()
+                .HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Post>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("post_id_primary");
+
+            entity.ToTable("Post");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.ImageUrl)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.HasOne(d => d.Room).WithMany(p => p.Posts)
+                .HasForeignKey(d => d.RoomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("post_roomid_foreign");
+        });
+
+        modelBuilder.Entity<Rating>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("rating_id_primary");
+
+            entity.ToTable("Rating");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.HasOne(d => d.Room).WithMany(p => p.Ratings)
+                .HasForeignKey(d => d.RoomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("rating_roomid_foreign");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Ratings)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("rating_userid_foreign");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("role_id_primary");
@@ -42,6 +149,35 @@ public partial class HomeHuntContext : DbContext
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Room>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("room_id_primary");
+
+            entity.ToTable("Room");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Length)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Services)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Width)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.HasOne(d => d.House).WithMany(p => p.Rooms)
+                .HasForeignKey(d => d.HouseId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("room_houseid_foreign");
         });
 
         modelBuilder.Entity<User>(entity =>
