@@ -33,5 +33,9 @@ public partial class User
 
     public int RoleId { get; set; }
 
+    public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
+
+    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+
     public virtual Role Role { get; set; }
 }

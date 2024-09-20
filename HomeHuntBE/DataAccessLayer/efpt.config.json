@@ -15,7 +15,27 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[Application]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[House]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Post]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Rating]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Role]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Room]",
          "ObjectType": 0
       },
       {
