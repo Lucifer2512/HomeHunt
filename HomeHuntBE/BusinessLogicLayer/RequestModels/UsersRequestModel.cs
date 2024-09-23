@@ -15,7 +15,7 @@ namespace BusinessLogicLayer.RequestModels
 		public DateTime Dob { get; set; }
 		public string Address { get; set; } = null!;
 		public string PhoneNumber { get; set; } = null!;
-		public int RoleId { get; set; }
+		public Guid RoleId { get; set; }
         public string Gender { get; set; } = null!;
         public bool Status { get; set; }
     }

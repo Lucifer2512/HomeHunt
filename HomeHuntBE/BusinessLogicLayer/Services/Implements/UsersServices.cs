@@ -82,8 +82,7 @@ namespace BusinessLogicLayer.Services.Implements
             if (user == null)
             {
                 throw new Exception($"User with ID {id} not found.");
-            }
-                                               
+            }                         
 
             var responseModel = new UserDetailResponse
             {
@@ -94,7 +93,6 @@ namespace BusinessLogicLayer.Services.Implements
                 Address = user.Address,
                 PhoneNumber = user.PhoneNumber,
                 Gender = user.Gender,
-				RoleName = user.Role.Name,
 				RatingCount = user.Rating,
             };
 
