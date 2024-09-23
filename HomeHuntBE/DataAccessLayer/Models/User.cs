@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.Models;
 
-public partial class User
+public partial class User : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string Email { get; set; }
 
     public string Password { get; set; }
@@ -23,15 +21,9 @@ public partial class User
 
     public string Address { get; set; }
 
-    public int Rating { get; set; }
+    public double Rating { get; set; }
 
-    public DateTime CreatedDate { get; set; }
-
-    public DateTime UpdatedDate { get; set; }
-
-    public bool Status { get; set; }
-
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
     public virtual ICollection<RoomApplication> Applications { get; set; } = new List<RoomApplication>();
 

@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.Models;
 
-public partial class Rating
+public partial class Rating : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public Guid UserId { get; set; }
 
     public Guid RoomId { get; set; }
@@ -18,8 +16,6 @@ public partial class Rating
     public string Description { get; set; }
 
     public DateTime Date { get; set; }
-
-    public bool Status { get; set; }
 
     public virtual Room Room { get; set; }
 

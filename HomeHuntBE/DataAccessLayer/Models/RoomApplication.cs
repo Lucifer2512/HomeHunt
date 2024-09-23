@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.Models;
 
-public partial class RoomApplication
+public partial class RoomApplication : BaseEntity
 {
-    public Guid Id { get; set; }
 
     public string FullName { get; set; }
 
@@ -22,8 +21,6 @@ public partial class RoomApplication
     public Guid RoomId { get; set; }
 
     public Guid UserId { get; set; }
-
-    public bool Status { get; set; }
 
     public virtual User User { get; set; }
 }

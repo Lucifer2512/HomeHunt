@@ -2,13 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models;
 
-public partial class Room
+public partial class Room : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public int Rating { get; set; }
@@ -22,8 +23,6 @@ public partial class Room
     public Guid HouseId { get; set; }
 
     public string Services { get; set; }
-
-    public bool Status { get; set; }
 
     public virtual House House { get; set; }
 

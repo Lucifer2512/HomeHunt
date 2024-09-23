@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.Models;
 
-public partial class House
+public partial class House : BaseEntity
 {
-    public Guid Id { get; set; }
 
     public string Address { get; set; }
 
@@ -16,8 +15,6 @@ public partial class House
     public string District { get; set; }
 
     public string City { get; set; }
-
-    public bool Status { get; set; }
 
     public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
 }
