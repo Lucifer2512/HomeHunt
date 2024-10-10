@@ -15,5 +15,13 @@ public partial class Post : BaseEntity
 
     public string ImageUrl { get; set; }
 
+    public decimal Price { get; set; }
+
+    public string Phone { get; set; }
+
+    public string SocialAccount { get; set; }
+
+    
+
     public virtual Room Room { get; set; }
 }

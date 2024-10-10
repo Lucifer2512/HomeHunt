@@ -12,7 +12,7 @@ public partial class Room : BaseEntity
 {
     public string Name { get; set; }
 
-    public int Rating { get; set; }
+    public int? Rating { get; set; }
 
     public string Description { get; set; }
 
@@ -20,9 +20,9 @@ public partial class Room : BaseEntity
 
     public string Width { get; set; }
 
-    public Guid HouseId { get; set; }
+    public Guid? HouseId { get; set; }
 
-    public string Services { get; set; }
+    public string? Services { get; set; }
 
     public virtual House House { get; set; }
 
