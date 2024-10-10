@@ -93,7 +93,6 @@ namespace BusinessLogicLayer.Services.Implements
                 Address = user.Address,
                 PhoneNumber = user.PhoneNumber,
                 Gender = user.Gender,
-				RatingCount = user.Rating,
             };
 
             return responseModel;

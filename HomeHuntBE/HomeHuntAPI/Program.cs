@@ -23,12 +23,14 @@ builder.Services.AddEndpointsApiExplorer();
 //	c.IncludeXmlComments(xmlPath);
 //});
 
+
+
 builder.Services.AddSwaggerGen(c =>
 {
     //c.OperationFilter<SnakecasingParameOperationFilter>();
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "FUES API",
+        Title = "HomeHunt API",
         Version = "v1"
     });
 
@@ -74,7 +76,7 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-        .WithOrigins("https://localhost:7293", "http://localhost:3000", "https://exchangeweb-fpt.netlify.app")
+        .WithOrigins("https://localhost:7293", "http://localhost:3000", "http://abandonedpets.ddns.net:8084/swagger/index.html")
         );
 });
 
@@ -84,10 +86,26 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+//if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "HomeHunt API V1");
+        c.RoutePrefix = string.Empty;
+    });
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();

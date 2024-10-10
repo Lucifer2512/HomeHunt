@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Drawing;
 using BusinessLogicLayer.ResponseModels;
+using DataAccessLayer.Tools;
 
 namespace HomeHuntAPI.Controllers
 {
@@ -21,12 +22,10 @@ namespace HomeHuntAPI.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IUsersService _userService;
-        private readonly IAuthServices _authService;
 
-		public UsersController(IUsersService userService, IAuthServices authServices)
+		public UsersController(IUsersService userService)
 		{
 			_userService = userService;
-			_authService = authServices;
 
         }
 
@@ -109,12 +108,12 @@ namespace HomeHuntAPI.Controllers
                 {
                     return NotFound(new { message = "User ID not found." });
                 }
-				if(_authService.VerifyPassword(request.OldPassword, user.Password) == false)
+				if(PasswordTools.VerifyPassword(request.OldPassword, user.Password) == false)
 				{
                     return BadRequest(new { message = "Password is uncorrect." });
                 }
 
-				string hashedPass = _authService.HashPassword(request.NewPassword);
+				string hashedPass = PasswordTools.HashPassword(request.NewPassword);
 
                 user.Password = hashedPass;
 

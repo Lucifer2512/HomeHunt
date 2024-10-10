@@ -12,20 +12,22 @@ using System.Security.Claims;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http;
+using DataAccessLayer.Tools;
 
 namespace BusinessLogicLayer.Services.Implements
 {
     public class AuthServices : IAuthServices
     {
-        private readonly IConfiguration _configuration;
         private readonly IUsersService _userService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
 
-        public AuthServices(IConfiguration configuration, IUsersService userService, IUnitOfWork unitOfWork)
+
+        public AuthServices(IUsersService userService, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
-            _configuration = configuration;
             _userService = userService;
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         public async Task<BaseResponseForLogin<LoginResponseModel>> AuthenticateAsync(string email, string password)
@@ -90,26 +92,7 @@ namespace BusinessLogicLayer.Services.Implements
             };
         }
 
-        public string GenerateJwtToken(string username, string roleName, Guid userId)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, roleName),
-                    new Claim(ClaimTypes.NameIdentifier, userId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddHours(24),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
 
         public async Task<BaseResponse<TokenModel>> RegisterAsync(RegisterModel registerModel)
         {
@@ -128,16 +111,15 @@ namespace BusinessLogicLayer.Services.Implements
             {
                 Id = Guid.NewGuid(),
                 Address = registerModel.Address,
-                RoleId = 2,
+                //RoleId = 2,
                 FullName = registerModel.FullName,
                 Email = registerModel.Email,
-                Password = HashPassword(registerModel.Password),
+                Password = PasswordTools.HashPassword(registerModel.Password),
                 Dob = DateTime.Now,
                 PhoneNumber = registerModel.PhoneNumber,
                 Gender = registerModel.Gender,
                 UpdatedDate = DateTime.UtcNow,
                 CreatedDate = DateTime.UtcNow,
-                Rating = 0,
                 Status = true,
             };
 
@@ -207,8 +189,8 @@ namespace BusinessLogicLayer.Services.Implements
             try
             {
                 var user = await _userService.GetUserByIdAsync(userId);
-                var providePassword = GeneratePassword();
-                user.Password = HashPassword(providePassword);
+                var providePassword = PasswordTools.GeneratePassword();
+                user.Password = PasswordTools.HashPassword(providePassword);
                 await _unitOfWork.Repository<User>().UpdateGuid(user, user.Id);
                 await _unitOfWork.CommitAsync();
 
@@ -313,8 +295,8 @@ namespace BusinessLogicLayer.Services.Implements
                     };
                 }
 
-                var providePassword = GeneratePassword();
-                query.Password = HashPassword(providePassword);
+                var providePassword = PasswordTools.GeneratePassword();
+                query.Password = PasswordTools.HashPassword(providePassword);
 
                 var smtpClient = new SmtpClient("smtp.gmail.com");
                 smtpClient.Port = 587;
@@ -402,56 +384,25 @@ namespace BusinessLogicLayer.Services.Implements
             }
         }
 
-        public string HashPassword(string password)
+        public string GenerateJwtToken(string username, string roleName, Guid userId)
         {
-            byte[] salt = new byte[16];
-            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                rng.GetBytes(salt);
-            }
-
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-
-            byte[] hashBytes = new byte[36];
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 20);
-            string hashedPassword = Convert.ToBase64String(hashBytes);
-
-            return hashedPassword;
-        }
-
-        public bool VerifyPassword(string password, string hashedPassword)
-        {
-            byte[] hashBytes = Convert.FromBase64String(hashedPassword);
-            byte[] salt = new byte[16];
-            Array.Copy(hashBytes, 0, salt, 0, 16);
-            byte[] hash = new byte[20];
-            Array.Copy(hashBytes, 16, hash, 0, 20);
-
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            byte[] computedHash = pbkdf2.GetBytes(20);
-
-            for (int i = 0; i < 20; i++)
-            {
-                if (hash[i] != computedHash[i])
+                Subject = new ClaimsIdentity(new[]
                 {
-                    return false;
-                }
-            }
-            return true;
-        }
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Role, roleName),
+                    new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddHours(24),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
 
-        public string GeneratePassword()
-        {
-            string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
-            var bytes = new byte[8];
-            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(bytes);
-            }
-            var password = new string(bytes.Select(b => characters[b % characters.Length]).ToArray());
-            return password;
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
