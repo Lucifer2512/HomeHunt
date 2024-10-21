@@ -25,9 +25,6 @@ public partial class User : BaseEntity
 
     public Guid RoleId { get; set; }
 
-    public virtual ICollection<RoomApplication> Applications { get; set; } = new List<RoomApplication>();
-
-    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
-
     public virtual Role Role { get; set; }
+    public virtual ICollection<Post> Posts { get; set; }
 }

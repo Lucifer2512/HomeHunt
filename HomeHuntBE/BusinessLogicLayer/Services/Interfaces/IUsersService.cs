@@ -10,8 +10,9 @@ namespace BusinessLogicLayer.Services
 {
 	public interface IUsersService
 	{
-		IEnumerable<User> GetUsers();
-		Task<User> GetUserByIdAsync(Guid id);
+		Task<IEnumerable<User>> GetUsersAsync();
+
+        Task<User> GetUserByIdAsync(Guid id);
 		Task CreateUserAsync(User user);
 		Task UpdateUserAsync(User user);
 		Task DeleteUserAsync(Guid id);
@@ -19,6 +20,7 @@ namespace BusinessLogicLayer.Services
 		Task<User> GetUserByFullNameAsync(string username);
 		Task<User> GetUserByEmailAsync(string email);
 		Task<UserDetailResponse> GetUserProfile(Guid id);
+		Task<User> GetUserByUsernameAsync(string username);
     }
 
 }

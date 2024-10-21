@@ -30,15 +30,12 @@ namespace BusinessLogicLayer.Services.Implements
             _configuration = configuration;
         }
 
-        public async Task<BaseResponseForLogin<LoginResponseModel>> AuthenticateAsync(string email, string password)
+        public async Task<BaseResponseForLogin<LoginResponseModel>> AuthenticateAsync(string username, string password)
         {
-            var user = await _userService.GetUserByEmailAsync(email);
+            var user = await _userService.GetUserByUsernameAsync(username);
 
             if (user != null)
             {
-                var userWithRole = await _userService.GetUserByFullNameAsync(user.FullName);
-                string token = GenerateJwtToken(user.FullName, userWithRole.Role.Name, user.Id);
-
                 if (user.Status == false)
                 {
                     return new BaseResponseForLogin<LoginResponseModel>()
@@ -61,6 +58,9 @@ namespace BusinessLogicLayer.Services.Implements
                         IsBanned = true,
                     };
                 }
+
+                var userWithRole = await _userService.GetUserByFullNameAsync(user.FullName);
+                string token = GenerateJwtToken(user.FullName, userWithRole.Role.Name, user.Id);
 
                 return new BaseResponseForLogin<LoginResponseModel>()
                 {
@@ -96,28 +96,28 @@ namespace BusinessLogicLayer.Services.Implements
 
         public async Task<BaseResponse<TokenModel>> RegisterAsync(RegisterModel registerModel)
         {
-            var existingUser = await _unitOfWork.Repository<User>().FindAsync(u => u.Email == registerModel.Email);
+
+            var existingUser = await _userService.GetUserByUsernameAsync(registerModel.Username);
 
             if (existingUser != null)
             {
                 return new BaseResponse<TokenModel>
                 {
                     Code = 409,
-                    Message = "Email already exists",
+                    Message = "Username already exists",
                 };
             }
+            var role = await _unitOfWork.Repository<Role>().FindAsync(r => r.Name == "Customer");
 
             var user = new User()
             {
                 Id = Guid.NewGuid(),
-                Address = registerModel.Address,
-                //RoleId = 2,
+                RoleId = role.Id,
+                Username = registerModel.Username,
                 FullName = registerModel.FullName,
-                Email = registerModel.Email,
                 Password = PasswordTools.HashPassword(registerModel.Password),
                 Dob = DateTime.Now,
                 PhoneNumber = registerModel.PhoneNumber,
-                Gender = registerModel.Gender,
                 UpdatedDate = DateTime.UtcNow,
                 CreatedDate = DateTime.UtcNow,
                 Status = true,
@@ -155,14 +155,14 @@ namespace BusinessLogicLayer.Services.Implements
 
             var user = new User()
             {
-                Address = adminCreateAccountModel.Address,
-                FullName = adminCreateAccountModel.FullName,
-                Email = adminCreateAccountModel.Email,
-                Password = "01234",
-                Gender = adminCreateAccountModel.Gender,
-                Dob = adminCreateAccountModel.Dob,
-                PhoneNumber = adminCreateAccountModel.PhoneNumber,
-                Status = true,
+                //Address = adminCreateAccountModel.Address,
+                //FullName = adminCreateAccountModel.FullName,
+                //Email = adminCreateAccountModel.Email,
+                //Password = "01234",
+                //Gender = adminCreateAccountModel.Gender,
+                //Dob = adminCreateAccountModel.Dob,
+                //PhoneNumber = adminCreateAccountModel.PhoneNumber,
+                //Status = true,
             };
 
             await _unitOfWork.Repository<User>().InsertAsync(user);

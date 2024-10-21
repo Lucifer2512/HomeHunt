@@ -3,6 +3,10 @@ using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.Mime.MediaTypeNames;
+using System.Drawing;
+using System.Net;
+using System.Numerics;
 
 namespace HomeHuntAPI.Controller
 {
@@ -49,10 +53,25 @@ namespace HomeHuntAPI.Controller
             var post = new Post
             {
                 //Field = userModel.Field,
-                RoomId = postModel.RoomId,
                 Title = postModel.Title,
                 Description = postModel.Description,
-                ImageUrl = postModel.ImageUrl,
+                Image = postModel.Image,
+                BuildingName = postModel.BuildingName,
+                Price = postModel.Price,
+                Phone = postModel.Phone,
+                Address = postModel.Address,
+                PropertyType = postModel.PropertyType,
+                ApartmentNumber = postModel.ApartmentNumber,
+                Block = postModel.Block,
+                Floor = postModel.Floor,
+                ApartmentType = postModel.ApartmentType,
+                Bedrooms = postModel.Bedrooms,
+                Bathrooms = postModel.Bathrooms,
+                LegalDocument = postModel.LegalDocument,
+                FurnitureCondition = postModel.FurnitureCondition,
+                Area = postModel.Area,
+                Deposit = postModel.Deposit,
+                UserId = postModel.UserId,
             };
 
 
@@ -71,10 +90,26 @@ namespace HomeHuntAPI.Controller
                 return NotFound();
             }
 
-            post.RoomId = postModel.RoomId;
             post.Title = postModel.Title;
             post.Description = postModel.Description;
-            post.ImageUrl = postModel.ImageUrl;
+            post.Description = postModel.Description;
+                post.Image = postModel.Image;
+                post.BuildingName = postModel.BuildingName;
+                post.Price = postModel.Price;
+                post.Phone = postModel.Phone;
+                post.Address = postModel.Address;
+                post.PropertyType = postModel.PropertyType;
+                post.ApartmentNumber = postModel.ApartmentNumber;
+                post.Block = postModel.Block;
+                post.Floor = postModel.Floor;
+                post.ApartmentType = postModel.ApartmentType;
+                post.Bedrooms = postModel.Bedrooms;
+                post.Bathrooms = postModel.Bathrooms;
+                post.LegalDocument = postModel.LegalDocument;
+                post.FurnitureCondition = postModel.FurnitureCondition;
+                post.Area = postModel.Area;
+                post.Deposit = postModel.Deposit;
+                post.UserId = postModel.UserId;
 
             await _postServices.UpdatePostAsync(post);
             return NoContent();

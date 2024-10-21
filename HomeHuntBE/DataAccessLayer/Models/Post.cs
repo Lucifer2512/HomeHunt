@@ -7,21 +7,27 @@ namespace DataAccessLayer.Models;
 
 public partial class Post : BaseEntity
 {
-    public Guid RoomId { get; set; }
-
-    public string Title { get; set; }
-
-    public string Description { get; set; }
-
-    public string ImageUrl { get; set; }
-
-    public decimal Price { get; set; }
-
-    public string Phone { get; set; }
-
-    public string SocialAccount { get; set; }
-
-    
-
-    public virtual Room Room { get; set; }
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public string? BuildingName { get; set; }
+    public string? Image { get; set; }
+    public decimal? Price { get; set; }
+    public string? Phone { get; set; }
+    public string? Address { get; set; }
+    public string? PropertyType { get; set; }
+    public string? ApartmentNumber { get; set; }
+    public string? Block { get; set; }
+    public string? Floor { get; set; }
+    public string? ApartmentType { get; set; }
+    public string? Bedrooms { get; set; }
+    public string? Bathrooms { get; set; }
+    public string? LegalDocument { get; set; }
+    public string? FurnitureCondition { get; set; }
+    public string? Area { get; set; }
+    public decimal? Deposit { get; set; }
+    public Guid? UserId { get; set; }
+    public virtual User User { get; set; }
 }
+
+
+
