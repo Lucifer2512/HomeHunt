@@ -32,10 +32,32 @@ namespace HomeHuntAPI.Controllers
 		// GET: api/Users
 		[HttpGet]
 		[Authorize]
-		public ActionResult<IEnumerable<User>> GetUsers()
+		public async Task<ActionResult<IEnumerable<UserDetailResponse>>> GetUsers()
 		{
-			var users = _userService.GetUsers();
-			return Ok(users);
+			var users = await _userService.GetUsersAsync();
+
+            var userViewModels = new List<UserDetailResponse>();
+
+            foreach (var user in users)
+            {
+                var userViewModel = new UserDetailResponse
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+					FullName = user.FullName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+					Gender = user.Gender,
+					Dob = user.Dob,
+					Address = user.Address,
+                    RoleName = user.Role.Name,
+                };
+
+                userViewModels.Add(userViewModel);
+            }
+
+
+            return Ok(userViewModels);
 		}
 
 		// GET: api/Users/5

@@ -16,13 +16,15 @@ namespace BusinessLogicLayer.Services.Implements
 			_unitOfWork = unitOfWork;
 		}
 
-		public IEnumerable<User> GetUsers()
-		{
-			return _unitOfWork.Repository<User>().GetAll();
+        public async Task<IEnumerable<User>> GetUsersAsync()
+        {
+            return await _unitOfWork.Repository<User>()
+                .AsQueryable()
+				.Include(r => r.Role)
+                .ToListAsync();  
+        }
 
-		}
-
-		public async Task<User> GetUserByIdAsync(Guid id)
+        public async Task<User> GetUserByIdAsync(Guid id)
 		{
 			return await _unitOfWork.Repository<User>().GetByIdGuid(id);
 		}
@@ -74,6 +76,15 @@ namespace BusinessLogicLayer.Services.Implements
 
 			return user;
 		}
+
+        public async Task<User> GetUserByUsernameAsync(string username)
+        {
+            // Truy vấn người dùng từ cơ sở dữ liệu theo tên người dùng
+            var user = await _unitOfWork.Repository<User>()
+                .FindAsync(u => u.Username == username);
+
+            return user;
+        }
 
         public async Task<UserDetailResponse> GetUserProfile(Guid id)
         {

@@ -17,9 +17,9 @@ namespace BusinessLogicLayer.ResponseModels
 		public string Gender { get; set; } = null!;
 		public string RoleName { get; set; } = null!;
 
-    }
+	}
     public class UserDetailResponse : UsersResponseModel
     {
-        public double RatingCount { get; set; }
+        public string Username { get; set; }
     }
 }

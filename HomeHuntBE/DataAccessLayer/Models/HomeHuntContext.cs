@@ -11,23 +11,12 @@ namespace DataAccessLayer.Models;
 public partial class HomeHuntContext : DbContext
 {
 
-    public virtual DbSet<RoomApplication> Applications { get; set; }
-
-    public virtual DbSet<Contract> Contracts { get; set; }
-
-    public virtual DbSet<Feedback> Feedbacks { get; set; }
-
-    public virtual DbSet<House> Houses { get; set; }
-
     public virtual DbSet<Post> Posts { get; set; }
-
-    public virtual DbSet<Rating> Ratings { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
-    public virtual DbSet<Room> Rooms { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
+
 
     public HomeHuntContext(DbContextOptions<HomeHuntContext> options) : base(options)
     {
@@ -48,57 +37,6 @@ public partial class HomeHuntContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<RoomApplication>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("application_id_primary");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-            entity.ToTable("Application");
-
-            entity.Property(e => e.Dob)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.FullName)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Gender)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.PhoneNumber)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Applications)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("application_userid_foreign");
-        });
-
-        modelBuilder.Entity<House>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("house_id_primary");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-            entity.ToTable("House");
-
-            entity.Property(e => e.Address)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.City)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.District)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Ward)
-                .IsRequired()
-                .HasMaxLength(255);
-        });
 
         modelBuilder.Entity<Post>(entity =>
         {
@@ -106,45 +44,17 @@ public partial class HomeHuntContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
             entity.ToTable("Post");
-
-            entity.Property(e => e.Description)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.ImageUrl)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Title)
-                .IsRequired()
-                .HasMaxLength(255);
-
-            entity.HasOne(d => d.Room).WithMany(p => p.Posts)
-                .HasForeignKey(d => d.RoomId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("post_roomid_foreign");
-        });
-
-        modelBuilder.Entity<Rating>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("rating_id_primary");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-            entity.ToTable("Rating");
-
-            entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.Description)
-                .IsRequired()
-                .HasMaxLength(255);
-
-            entity.HasOne(d => d.Room).WithMany(p => p.Ratings)
-                .HasForeignKey(d => d.RoomId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("rating_roomid_foreign");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Ratings)
+            entity.Property(e => e.Price)
+                .HasColumnType("decimal(18, 4)");
+            entity.Property(e => e.Deposit)
+                .HasColumnType("decimal(18, 4)");
+            entity.HasOne(d => d.User).WithMany(p => p.Posts)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("rating_userid_foreign");
+                .HasConstraintName("post_userid_foreign");
+
         });
+
 
         modelBuilder.Entity<Role>(entity =>
         {
@@ -152,39 +62,12 @@ public partial class HomeHuntContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
             entity.ToTable("Role");
-
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255);
+
         });
 
-        modelBuilder.Entity<Room>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("room_id_primary");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-            entity.ToTable("Room");
-
-            entity.Property(e => e.Description)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Length)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Services)
-                .HasMaxLength(255);
-            entity.Property(e => e.Width)
-                .IsRequired()
-                .HasMaxLength(255);
-
-            entity.HasOne(d => d.House).WithMany(p => p.Rooms)
-                .HasForeignKey(d => d.HouseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("room_houseid_foreign");
-        });
 
         modelBuilder.Entity<User>(entity =>
         {
@@ -234,31 +117,23 @@ public partial class HomeHuntContext : DbContext
 
         // Seeding users with the appropriate RoleId
         modelBuilder.Entity<User>().HasData(
-            new User { Id = Guid.NewGuid(), Username = "Admin1", FullName = "Admin 1", Email = "Admin1@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Admin2", FullName = "Admin 2", Email = "Admin2@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer1", FullName = "Customer 1", Email = "Customer1@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer2", FullName = "Customer 2", Email = "Customer2@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer3", FullName = "Customer 3", Email = "Customer3@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer4", FullName = "Customer 4", Email = "Customer4@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer5", FullName = "Customer 5", Email = "Customer5@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer6", FullName = "Customer 6", Email = "Customer6@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer7", FullName = "Customer 7", Email = "Customer7@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer8", FullName = "Customer 8", Email = "Customer8@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer9", FullName = "Customer 9", Email = "Customer9@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer10", FullName = "Customer 10", Email = "Customer10@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer11", FullName = "Customer 11", Email = "Customer11@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer12", FullName = "Customer 12", Email = "Customer12@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer13", FullName = "Customer 13", Email = "Customer13@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer14", FullName = "Customer 14", Email = "Customer14@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer15", FullName = "Customer 15", Email = "Customer15@email.com", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId }
-        );
-
-        modelBuilder.Entity<Room>().HasData(
-            new Room { Id = tempRoomId, Name = "Temporary Room", Description = "This is a room. Here is some more characters to test the length of the text box", Length = "10m", Width = "5m" }
-        );
-
-        modelBuilder.Entity<Post>().HasData(
-            new Post { Id = Guid.NewGuid(), RoomId = tempRoomId, Title = "Temporary Post", Description = "This is a post. Here is some more characters to test the length of the text box", ImageUrl = "not yet set up", Price = 10000, Phone = "123456789", SocialAccount = "zalo || fb" }
+            new User { Id = Guid.NewGuid(), Username = "Admin1", FullName = "Admin 1", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Admin2", FullName = "Admin 2", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer1", FullName = "Customer 1", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer2", FullName = "Customer 2", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer3", FullName = "Customer 3", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer4", FullName = "Customer 4", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer5", FullName = "Customer 5", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer6", FullName = "Customer 6", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer7", FullName = "Customer 7", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer8", FullName = "Customer 8", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer9", FullName = "Customer 9", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer10", FullName = "Customer 10", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer11", FullName = "Customer 11", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer12", FullName = "Customer 12", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer13", FullName = "Customer 13", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer14", FullName = "Customer 14", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer15", FullName = "Customer 15", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId }
         );
 
         OnModelCreatingPartial(modelBuilder);

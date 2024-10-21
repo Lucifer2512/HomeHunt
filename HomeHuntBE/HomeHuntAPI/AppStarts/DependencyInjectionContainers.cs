@@ -28,11 +28,7 @@ namespace HomeHuntAPI.AppStarts
             //services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthServices, AuthServices>();
 			services.AddScoped<IUsersService, UsersServices>();
-			services.AddScoped<IHouseServices, HouseServices>();
 			services.AddScoped<IPostServices, PostServices>();
-			services.AddScoped<IRatingServices, RatingServices>();
-			services.AddScoped<IRoomApplicationServices, RoomApplicationServices>();
-			services.AddScoped<IRoomServices, RoomServices>();
 			//services.AddScoped<IContractService, ContractService>();
 			//services.AddScoped<IFeedbackService, FeedbackService>();
 
