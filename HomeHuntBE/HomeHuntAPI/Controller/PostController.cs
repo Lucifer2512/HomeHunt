@@ -7,6 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
 using System.Net;
 using System.Numerics;
+using BusinessLogicLayer.ResponseModels;
 
 namespace HomeHuntAPI.Controller
 {
@@ -24,18 +25,56 @@ namespace HomeHuntAPI.Controller
         // GET: api/Post
         [HttpGet]
         [Authorize]
-        public ActionResult<IEnumerable<Post>> GetPosts()
+        public async Task<ActionResult<IEnumerable<PostResponseModel>>> GetPosts(bool? status)
         {
-            var posts = _postServices.GetPosts();
-            return Ok(posts);
+            try
+            {
+                var posts = await _postServices.GetPosts(status);
+
+                var postList = new List<PostResponseModel>();
+                foreach (var post in posts)
+                {
+                    var postView = new PostResponseModel
+                    {
+                        Id = post.Id,
+                        Phoneseller = post.User.PhoneNumber,
+                        PostTitle = post.Title,
+                        Description = post.Description,
+                        BuildingName = post.BuildingName,
+                        Images = post.ImageUrl,
+                        RentPrice = post.Price,
+                        Address = post.Address,
+                        PropertyType = post.PropertyType,
+                        ApartmentNumber = post.ApartmentNumber,
+                        Block = post.Block,
+                        Floor = post.Floor,
+                        ApartmentType = post.ApartmentType,
+                        Bedrooms = post.Bedrooms,
+                        Bathrooms = post.Bathrooms,
+                        LegalDocument = post.LegalDocument,
+                        FurnitureCondition = post.FurnitureCondition,
+                        Area = post.Area,
+                        Deposit = post.Deposit,
+                        UserId = post.UserId,
+                        Status = post.Status,
+                    };
+                    postList.Add(postView);
+    }
+                return Ok(postList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
         }
 
         // GET: api/Post/1
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Post>> GetPost(Guid id)
+        public async Task<ActionResult<Post>> GetPost(Guid id, bool status)
         {
-            var post = await _postServices.GetPostByIdAsync(id);
+            var post = await _postServices.GetPostByIdAsyncAndStatus(id, status);
             if (post == null)
             {
                 return NotFound();
@@ -47,18 +86,15 @@ namespace HomeHuntAPI.Controller
         // POST: api/Posts
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<User>> AddPost(PostCreateRequestModel postModel)
+        public async Task<ActionResult<Post>> AddPost([FromForm] PostCreateRequestModel postModel)
         {
-            // Map properties from userModel to create a new user entity
             var post = new Post
             {
-                //Field = userModel.Field,
                 Title = postModel.Title,
                 Description = postModel.Description,
-                Image = postModel.Image,
+                ImageUrl = postModel.ImageUrl,
                 BuildingName = postModel.BuildingName,
                 Price = postModel.Price,
-                Phone = postModel.Phone,
                 Address = postModel.Address,
                 PropertyType = postModel.PropertyType,
                 ApartmentNumber = postModel.ApartmentNumber,
@@ -72,6 +108,7 @@ namespace HomeHuntAPI.Controller
                 Area = postModel.Area,
                 Deposit = postModel.Deposit,
                 UserId = postModel.UserId,
+                Status = null
             };
 
 
@@ -82,7 +119,7 @@ namespace HomeHuntAPI.Controller
         // PUT: api/Posts/{id}
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdatePost(Guid id, PostUpdateRequestModel postModel)
+        public async Task<IActionResult> UpdatePost(Guid id, [FromForm] PostUpdateRequestModel postModel)
         {
             var post = await _postServices.GetPostByIdAsync(id);
             if (post == null)
@@ -90,30 +127,64 @@ namespace HomeHuntAPI.Controller
                 return NotFound();
             }
 
-            post.Title = postModel.Title;
-            post.Description = postModel.Description;
-            post.Description = postModel.Description;
-                post.Image = postModel.Image;
-                post.BuildingName = postModel.BuildingName;
-                post.Price = postModel.Price;
-                post.Phone = postModel.Phone;
-                post.Address = postModel.Address;
-                post.PropertyType = postModel.PropertyType;
-                post.ApartmentNumber = postModel.ApartmentNumber;
-                post.Block = postModel.Block;
-                post.Floor = postModel.Floor;
-                post.ApartmentType = postModel.ApartmentType;
-                post.Bedrooms = postModel.Bedrooms;
-                post.Bathrooms = postModel.Bathrooms;
-                post.LegalDocument = postModel.LegalDocument;
-                post.FurnitureCondition = postModel.FurnitureCondition;
-                post.Area = postModel.Area;
-                post.Deposit = postModel.Deposit;
-                post.UserId = postModel.UserId;
+            // Skip updating if the value is null
+            if (!string.IsNullOrEmpty(postModel.Title))
+            { post.Title = postModel.Title; }
+
+            if (!string.IsNullOrEmpty(postModel.Description))
+            { post.Description = postModel.Description; }
+
+            if (postModel.ImageUrl != null)
+            { post.ImageUrl = postModel.ImageUrl; }
+
+            if (!string.IsNullOrEmpty(postModel.BuildingName))
+            { post.BuildingName = postModel.BuildingName; }
+
+            if (postModel.Price.HasValue)
+            { post.Price = postModel.Price.Value; }
+
+            if (!string.IsNullOrEmpty(postModel.Address))
+            { post.Address = postModel.Address; }
+
+            if (!string.IsNullOrEmpty(postModel.PropertyType))
+            { post.PropertyType = postModel.PropertyType; }
+
+            if (!string.IsNullOrEmpty(postModel.ApartmentNumber))
+            { post.ApartmentNumber = postModel.ApartmentNumber; }
+
+            if (!string.IsNullOrEmpty(postModel.Block))
+            { post.Block = postModel.Block; }
+
+            if (!string.IsNullOrEmpty(postModel.Floor))
+            { post.Floor = postModel.Floor; }
+
+            if (!string.IsNullOrEmpty(postModel.ApartmentType))
+            { post.ApartmentType = postModel.ApartmentType; }
+
+            if (!string.IsNullOrEmpty(postModel.Bedrooms))
+            { post.Bedrooms = postModel.Bedrooms; }
+
+            if (!string.IsNullOrEmpty(postModel.Bathrooms))
+            { post.Bathrooms = postModel.Bathrooms; }
+
+            if (!string.IsNullOrEmpty(postModel.LegalDocument))
+            { post.LegalDocument = postModel.LegalDocument; }
+
+            if (!string.IsNullOrEmpty(postModel.FurnitureCondition))
+            { post.FurnitureCondition = postModel.FurnitureCondition; }
+
+            if (!string.IsNullOrEmpty(postModel.Area))
+            { post.Area = postModel.Area; }
+
+            if (postModel.Deposit.HasValue)
+            { post.Deposit = postModel.Deposit.Value; }
+
+            post.Status = postModel.Status;
 
             await _postServices.UpdatePostAsync(post);
             return NoContent();
         }
+
 
 
 

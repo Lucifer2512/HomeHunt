@@ -45,11 +45,11 @@ namespace HomeHuntAPI.Controllers
                     Id = user.Id,
                     Username = user.Username,
 					FullName = user.FullName,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-					Gender = user.Gender,
-					Dob = user.Dob,
-					Address = user.Address,
+                    //Email = user.Email,
+                    Phone = user.PhoneNumber,
+					//Gender = user.Gender,
+					//Dob = user.Dob,
+					//Address = user.Address,
                     RoleName = user.Role.Name,
                 };
 
@@ -96,20 +96,55 @@ namespace HomeHuntAPI.Controllers
 		{
             try
             {
+                var role = await _userService.getRole(userModel.RoleName);
+                
+
                 var user = await _userService.GetUserByIdAsync(id);
 				if (user == null)
 				{
 					return NotFound(new { message = "User ID not found." });
 				}
 
-				user.Dob = userModel.Dob;
-				user.Address = userModel.Address;
-				user.PhoneNumber = userModel.PhoneNumber;		
-				user.UpdatedDate = DateTime.Now;
-				user.Gender = userModel.Gender;
-				user.FullName = userModel.FullName;
+                if (userModel.Dob.HasValue)
+                {
+                    user.Dob = userModel.Dob;
+                }
 
-				await _userService.UpdateUserAsync(user);
+                if (!string.IsNullOrEmpty(userModel.Email))
+                {
+                    user.Email = userModel.Email;
+                }
+
+                if (!string.IsNullOrEmpty(userModel.Address))
+                {
+                    user.Address = userModel.Address;
+                }
+
+                if (!string.IsNullOrEmpty(userModel.PhoneNumber))
+                {
+                    user.PhoneNumber = userModel.PhoneNumber;
+                }
+
+                if (!string.IsNullOrEmpty(userModel.Gender))
+                {
+                    user.Gender = userModel.Gender;
+                }
+
+                if (!string.IsNullOrEmpty(userModel.FullName))
+                {
+                    user.FullName = userModel.FullName;
+                }
+                if (role != null)
+                {
+                    user.RoleId = role.Id;
+                }
+               
+
+                user.Status = userModel.Status;
+
+                user.UpdatedDate = DateTime.UtcNow.AddHours(7);
+
+                await _userService.UpdateUserAsync(user);
 
                 return Ok(new { message = "User updated successfully." });
             }
@@ -154,19 +189,27 @@ namespace HomeHuntAPI.Controllers
 		[Authorize]
 		public async Task<ActionResult<User>> PostUser(UserCreateRequestModel userModel)
 		{
-			// Map properties from userModel to create a new user entity
-			var user = new User
+
+            var existingUser = await _userService.GetUserByUsernameAsync(userModel.Username);
+            if (existingUser != null)
+            {
+                return BadRequest(new { message = "UserName Existed." });
+            }
+
+            var role = await _userService.getRole(userModel.RoleName);
+
+            // Map properties from userModel to create a new user entity
+            var user = new User
 			{
-				//Field = userModel.Field,
+                Username = userModel.Username,
 				FullName = userModel.FullName,
 				Password = userModel.Password,
 				Email = userModel.Email,
 				Dob = userModel.Dob,
 				Address = userModel.Address,
 				PhoneNumber = userModel.PhoneNumber,
-				RoleId = userModel.RoleId,
+				RoleId = role.Id,
 				Status = userModel.Status,
-				CreatedDate = DateTime.Now,
 				Gender = userModel.Gender
 			};
 

@@ -16,5 +16,10 @@ namespace DataAccessLayer.Models
 
         public bool? Status { get; set; }
 
+        public BaseEntity()
+        {
+            CreatedDate = DateTime.UtcNow.AddHours(7);
+            UpdatedDate = DateTime.UtcNow.AddHours(7);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models;
 using DataAccessLayer.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,39 @@ namespace BusinessLogicLayer.Services.Implements
         {
             _unitOfWork = unitOfWork;
         }
-        public IEnumerable<Post> GetPosts()
+        public async Task<IEnumerable<Post>> GetPosts(bool? Status)
         {
-            return _unitOfWork.Repository<Post>().GetAll();
+            IEnumerable<Post> posts = null;
+            if (Status.HasValue)
+            {
+                posts = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status.Value).Include(u => u.User).ToListAsync();
+            }
+            else
+            {
+                posts = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status).Include(u => u.User).ToListAsync();
+            }
 
+            return posts;
+        }
+
+        public async Task<Post> GetPostByIdAsyncAndStatus(Guid id, bool? Status)
+        {
+            Post post = null;
+            if (Status.HasValue)
+            {
+                post = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status.Value).Include(u => u.User).FirstOrDefaultAsync();
+            }
+            else
+            {
+                post = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status).Include(u => u.User).FirstOrDefaultAsync();
+            }
+            return post;
         }
 
         public async Task<Post> GetPostByIdAsync(Guid id)
         {
-            return await _unitOfWork.Repository<Post>().GetByIdGuid(id);
+            return (await _unitOfWork.Repository<Post>().GetWhere(post => post.Id == id))
+                   .SingleOrDefault();
         }
 
         public async Task CreatePostAsync(Post post)

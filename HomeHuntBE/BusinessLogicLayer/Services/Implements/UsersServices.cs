@@ -23,6 +23,11 @@ namespace BusinessLogicLayer.Services.Implements
 				.Include(r => r.Role)
                 .ToListAsync();  
         }
+		public async Task<Role> getRole(string roleName)
+		{
+            return await _unitOfWork.Repository<Role>().FindAsync(r => r.Name == roleName);
+        }
+
 
         public async Task<User> GetUserByIdAsync(Guid id)
 		{
@@ -102,8 +107,9 @@ namespace BusinessLogicLayer.Services.Implements
                 Email = user.Email,
                 Dob = user.Dob,
                 Address = user.Address,
-                PhoneNumber = user.PhoneNumber,
+                Phone = user.PhoneNumber,
                 Gender = user.Gender,
+
             };
 
             return responseModel;

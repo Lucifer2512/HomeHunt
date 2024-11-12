@@ -1,10 +1,11 @@
 ﻿using BusinessLogicLayer.Services;
 using BusinessLogicLayer.Services.Implements;
 using BusinessLogicLayer.Services.Interfaces;
-using DataAccessLayer.Models;
+using DataAccessLayer;
 using DataAccessLayer.Repository;
 using DataAccessLayer.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Net.payOS;
 
 namespace HomeHuntAPI.AppStarts
 {
@@ -21,16 +22,24 @@ namespace HomeHuntAPI.AppStarts
 			{
 				options.UseSqlServer(configuration.GetConnectionString("Server"));
 			});
+            PayOS payOS = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw new Exception("Cannot find environment"),
+                    configuration["Environment:PAYOS_API_KEY"] ?? throw new Exception("Cannot find environment"),
+                    configuration["Environment:PAYOS_CHECKSUM_KEY"] ?? throw new Exception("Cannot find environment"));
 
-			services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton(payOS);
+
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 
             //services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthServices, AuthServices>();
 			services.AddScoped<IUsersService, UsersServices>();
 			services.AddScoped<IPostServices, PostServices>();
-			//services.AddScoped<IContractService, ContractService>();
-			//services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+            //services.AddScoped<IContractService, ContractService>();
+            //services.AddScoped<IFeedbackService, FeedbackService>();
 
 
         }

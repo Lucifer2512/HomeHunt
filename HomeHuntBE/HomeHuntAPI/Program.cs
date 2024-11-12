@@ -1,14 +1,18 @@
 using HomeHuntAPI.AppStarts;
 using Microsoft.OpenApi.Models;
+using Net.payOS;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
 }); 
 
 
@@ -80,7 +84,7 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-        .WithOrigins("https://localhost:7293", "http://localhost:3000", "http://abandonedpets.ddns.net:8084/swagger/index.html")
+        .WithOrigins("https://localhost:7293", "http://localhost:3000", "https://home-hunt-main.vercel.app/")
         );
 });
 

@@ -9,14 +9,12 @@ namespace BusinessLogicLayer.RequestModels
     public class PostCreateRequestModel
     {
         //public string Field { get; set; } = null!;
-        public Guid RoomId { get; set; }
+        //public Guid RoomId { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public string Image { get; set; } = null!;
+        public List<string>? ImageUrl { get; set; } = null!;
         public string BuildingName { get; set; } = null!;
         public decimal Price { get; set; }= 0!;
-        public string Phone { get; set; }= null!;
-        public string SocialAccount { get; set; }= null!;
         public string Address { get; set; }= null!;
         public string PropertyType { get; set; }= null!;
         public string ApartmentNumber { get; set; }= null!;
@@ -36,14 +34,12 @@ namespace BusinessLogicLayer.RequestModels
     public class PostUpdateRequestModel
     {
         //public string Field { get; set; } = null!;
-        public Guid RoomId { get; set; }
+        //public Guid RoomId { get; set; }
         public string? Title { get; set; } = null!;
         public string? Description { get; set; } = null!;
-        public string? Image { get; set; } = null!;
+        public List<string>? ImageUrl { get; set; } = null!;
         public string? BuildingName { get; set; } = null!;
         public decimal? Price { get; set; } = 0!;
-        public string? Phone { get; set; } = null!;
-        public string? SocialAccount { get; set; } = null!;
         public string? Address { get; set; } = null!;
         public string? PropertyType { get; set; } = null!;
         public string? ApartmentNumber { get; set; } = null!;
@@ -57,6 +53,6 @@ namespace BusinessLogicLayer.RequestModels
         public string? Area { get; set; } = null!;
         public decimal? Deposit { get; set; } = 0!;
         public string? PostTitle { get; set; } = null!;
-        public Guid? UserId { get; set; } = Guid.Empty!;
+        public bool? Status { get; set; } = null!;
     }
 }

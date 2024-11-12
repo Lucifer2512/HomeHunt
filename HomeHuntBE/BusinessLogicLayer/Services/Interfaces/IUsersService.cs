@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Services
 	public interface IUsersService
 	{
 		Task<IEnumerable<User>> GetUsersAsync();
-
+		Task<Role> getRole(string roleName);
         Task<User> GetUserByIdAsync(Guid id);
 		Task CreateUserAsync(User user);
 		Task UpdateUserAsync(User user);

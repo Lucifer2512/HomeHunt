@@ -51,7 +51,7 @@ namespace BusinessLogicLayer.Services.Implements
                                 Email = user.Email,
                                 Dob = user.Dob,
                                 Address = user.Address,
-                                PhoneNumber = user.PhoneNumber,
+                                Phone = user.PhoneNumber,
                                 Gender = user.Gender
                             },
                         },
@@ -76,7 +76,7 @@ namespace BusinessLogicLayer.Services.Implements
                             Email = user.Email,
                             Dob = user.Dob,
                             Address = user.Address,
-                            PhoneNumber = user.PhoneNumber,
+                            Phone = user.PhoneNumber,
                             Gender = user.Gender
                         },
                     },
@@ -116,10 +116,7 @@ namespace BusinessLogicLayer.Services.Implements
                 Username = registerModel.Username,
                 FullName = registerModel.FullName,
                 Password = PasswordTools.HashPassword(registerModel.Password),
-                Dob = DateTime.Now,
                 PhoneNumber = registerModel.PhoneNumber,
-                UpdatedDate = DateTime.UtcNow,
-                CreatedDate = DateTime.UtcNow,
                 Status = true,
             };
 
