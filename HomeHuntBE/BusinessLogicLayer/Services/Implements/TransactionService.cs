@@ -4,6 +4,7 @@ using DataAccessLayer.Models;
 using DataAccessLayer.UnitOfWork;
 using Net.payOS;
 using Net.payOS.Types;
+using System.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,15 @@ namespace BusinessLogicLayer.Services.Implements
 
                 ItemData item = new ItemData(body.productName, 1, body.price);
                 List<ItemData> items = new List<ItemData> { item };
+
+                if (body.cancelUrl == null || body.returnUrl == null)
+                {
+                    body = body with
+                    {
+                        cancelUrl = body.cancelUrl ?? "",
+                        returnUrl = body.returnUrl ?? ""
+                    };
+                }
 
                 string buyerName = !string.IsNullOrEmpty(body.buyerName) ? body.buyerName : user.FullName;
                 string buyerPhone = !string.IsNullOrEmpty(body.buyerPhone) ? body.buyerPhone : Phone;
