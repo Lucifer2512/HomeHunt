@@ -32,7 +32,7 @@ namespace BusinessLogicLayer.RequestModels
 		public string? PhoneNumber { get; set; } = null!;
         public string? Gender { get; set; } = null!;
         public bool? Status { get; set; }
-        public string RoleName { get; set; }
+		public string? RoleName { get; set; } = null!;
     }
 
 }

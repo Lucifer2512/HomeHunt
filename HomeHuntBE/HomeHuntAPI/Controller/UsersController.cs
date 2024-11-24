@@ -96,10 +96,8 @@ namespace HomeHuntAPI.Controllers
 		{
             try
             {
-                var role = await _userService.getRole(userModel.RoleName);
-                
-
                 var user = await _userService.GetUserByIdAsync(id);
+
 				if (user == null)
 				{
 					return NotFound(new { message = "User ID not found." });
@@ -134,11 +132,14 @@ namespace HomeHuntAPI.Controllers
                 {
                     user.FullName = userModel.FullName;
                 }
-                if (role != null)
+                if(!string.IsNullOrEmpty(userModel.RoleName))
                 {
-                    user.RoleId = role.Id;
+                    var role = await _userService.getRole(userModel.RoleName);
+                    if (role != null)
+                    {
+                        user.RoleId = role.Id;
+                    }
                 }
-               
 
                 user.Status = userModel.Status;
 
