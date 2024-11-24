@@ -52,7 +52,6 @@ namespace BusinessLogicLayer.RequestModels
         public string? FurnitureCondition { get; set; } = null!;
         public string? Area { get; set; } = null!;
         public decimal? Deposit { get; set; } = 0!;
-        public string? PostTitle { get; set; } = null!;
         public bool? Status { get; set; } = null!;
     }
 }

@@ -83,9 +83,12 @@ namespace BusinessLogicLayer.Services.Implements
 
         public async Task DeletePostAsync(Guid id)
         {
+            var transaction = (await _unitOfWork.Repository<Transaction>().GetWhere(t => t.PostId == id)).SingleOrDefault(); ;
+
             var post = await _unitOfWork.Repository<Post>().GetByIdGuid(id);
-            if (post != null)
+            if (post != null && transaction != null)
             {
+                _unitOfWork.Repository<Transaction>().Delete(transaction);
                 _unitOfWork.Repository<Post>().Delete(post);
                 await _unitOfWork.CommitAsync();
             }
