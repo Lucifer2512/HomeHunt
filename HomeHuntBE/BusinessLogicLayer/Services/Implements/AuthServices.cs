@@ -58,7 +58,15 @@ namespace BusinessLogicLayer.Services.Implements
                         IsBanned = true,
                     };
                 }
-
+                if(user.Username != username || !PasswordTools.VerifyPassword(password, user.Password))
+                {
+                    return new BaseResponseForLogin<LoginResponseModel>()
+                    {
+                        Code = 404,
+                        Message = "Incorrect username or password. Check again",
+                        Data = null
+                    };
+                }
                 var userWithRole = await _userService.GetUserByFullNameAsync(user.FullName);
                 string token = GenerateJwtToken(user.FullName, userWithRole.Role.Name, user.Id);
 
