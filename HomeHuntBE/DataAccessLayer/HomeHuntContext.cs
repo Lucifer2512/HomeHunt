@@ -41,7 +41,7 @@ public class HomeHuntContext : DbContext
         IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true).Build();
-        return configuration.GetConnectionString("Server");
+        return configuration.GetConnectionString("Local");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -12,6 +12,10 @@ namespace BusinessLogicLayer.Services.Interfaces
 {
     public interface ITransactionService
     {
+        Task<Response> GetOrders();
+
+        Task<Response> GetOrderByUserId(Guid userId);
+
         Task<Response> CreatePaymentLink(CreatePaymentLinkRequest body, string Phone);
 
         Task<Response> GetOrder(int orderCode);

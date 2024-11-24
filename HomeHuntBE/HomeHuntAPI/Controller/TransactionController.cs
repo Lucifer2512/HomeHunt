@@ -17,6 +17,32 @@ namespace HomeHuntAPI.Controller
             _logger = logger;  // Initialize logger
         }
 
+        [HttpGet("get-orders")]
+        public async Task<IActionResult> GetOrders()
+        {
+            var response = await _transactionService.GetOrders();
+            if (response.error == 0)
+            {
+                return Ok(response);
+            }
+
+            _logger.LogError("Failed to get order {OrderCode}: {Message}", response.message);
+            return BadRequest(new { response.message });
+        }
+
+        [HttpGet("get-order-user/{userId}")]
+        public async Task<IActionResult> GetOrderByUser(Guid userId)
+        {
+            var response = await _transactionService.GetOrderByUserId(userId);
+            if (response.error == 0)
+            {
+                return Ok(response);
+            }
+
+            _logger.LogError("Failed to get order {OrderCode}: {Message}", userId, response.message);
+            return BadRequest(new { response.message });
+        }
+
         [HttpPost("create-payment-link")]
         public async Task<IActionResult> CreatePaymentLink([FromBody] CreatePaymentLinkRequest body, [FromQuery] string phone)
         {
@@ -70,15 +96,15 @@ namespace HomeHuntAPI.Controller
         }
 
         [HttpPost("check-order")]
-        public async Task<IActionResult> CheckOrder([FromBody] CheckOrderRequest request, [FromQuery] string userEmail)
+        public async Task<IActionResult> CheckOrder([FromBody] CheckOrderRequest request, [FromQuery] string userPhone)
         {
-            var response = await _transactionService.CheckOrder(request, userEmail);
+            var response = await _transactionService.CheckOrder(request, userPhone);
             if (response.error == 0)
             {
                 return Ok(response);
             }
 
-            _logger.LogError("Failed to check order {OrderCode} for user {UserEmail}: {Message}", request.OrderCode, userEmail, response.message);
+            _logger.LogError("Failed to check order {OrderCode} for user {UserEmail}: {Message}", request.OrderCode, userPhone, response.message);
             return BadRequest(new { response.message });
         }
     }

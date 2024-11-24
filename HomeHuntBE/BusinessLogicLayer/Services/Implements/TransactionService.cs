@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Transaction = DataAccessLayer.Models.Transaction;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogicLayer.Services.Implements
 {
@@ -25,11 +26,46 @@ namespace BusinessLogicLayer.Services.Implements
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Response> GetOrderByUserId(Guid userId)
+        {
+            try
+            {
+                var orders = await _unitOfWork.Repository<Transaction>()
+                                              .AsQueryable()
+                                              .AsNoTracking()
+                                              .Where(u => u.UserId == userId)
+                                              .Include(u => u.User)
+                                              .ToListAsync();
+                return new Response(0, "Ok", orders);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return new Response(-1, "fail", null);
+            }
+        }
+
+        public async Task<Response> GetOrders()
+        {
+            try
+            {
+                var orders = await _unitOfWork.Repository<Transaction>()
+                                              .AsQueryable()
+                                              .ToListAsync();
+                return new Response(0, "Ok", orders);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return new Response(-1, "fail", null);
+            }
+        }
+
         public async Task<Response> CreatePaymentLink(CreatePaymentLinkRequest body, string Phone)
         {
             try
             {
-                var user = await _unitOfWork.Repository<User>().FindAsync(u => u.Email == Phone);
+                var user = await _unitOfWork.Repository<User>().FindAsync(u => u.PhoneNumber == Phone);
                 if (user == null)
                 {
                     return new Response(-1, "User not found", null);
@@ -138,12 +174,12 @@ namespace BusinessLogicLayer.Services.Implements
                 return new Response(-1, "fail", null);
             }
         }
-        public async Task<Response> CheckOrder(CheckOrderRequest request, string userEmail)
+        public async Task<Response> CheckOrder(CheckOrderRequest request, string userPhone)
         {
             try
             {
                 // Use AsNoTracking for the initial query if you're going to update later
-                var user = await _unitOfWork.Repository<User>().FindAsync(u => u.Email == userEmail);
+                var user = await _unitOfWork.Repository<User>().FindAsync(u => u.PhoneNumber == userPhone);
                 if (user == null)
                 {
                     return new Response(-1, "User not found", null);

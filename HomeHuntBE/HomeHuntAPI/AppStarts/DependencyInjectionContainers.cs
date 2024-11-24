@@ -20,7 +20,7 @@ namespace HomeHuntAPI.AppStarts
 			});
 			services.AddDbContext<HomeHuntContext>(options =>
 			{
-				options.UseSqlServer(configuration.GetConnectionString("Server"));
+				options.UseSqlServer(configuration.GetConnectionString("Local"));
 			});
             PayOS payOS = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw new Exception("Cannot find environment"),
                     configuration["Environment:PAYOS_API_KEY"] ?? throw new Exception("Cannot find environment"),
