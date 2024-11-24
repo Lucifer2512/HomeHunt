@@ -85,7 +85,8 @@ namespace BusinessLogicLayer.Services.Implements
                             Dob = user.Dob,
                             Address = user.Address,
                             Phone = user.PhoneNumber,
-                            Gender = user.Gender
+                            Gender = user.Gender,
+                            RoleName = user.Role.Name
                         },
                     },
                     IsBanned = false

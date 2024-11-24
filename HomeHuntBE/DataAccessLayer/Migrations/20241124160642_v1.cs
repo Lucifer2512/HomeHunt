@@ -61,11 +61,11 @@ namespace DataAccessLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BuildingName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    Images = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RentPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PropertyType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApartmentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -77,7 +77,7 @@ namespace DataAccessLayer.Migrations
                     LegalDocument = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FurnitureCondition = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Area = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Deposit = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    Deposit = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -101,8 +101,8 @@ namespace DataAccessLayer.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TransactionCode = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: true)
@@ -127,8 +127,8 @@ namespace DataAccessLayer.Migrations
                 columns: new[] { "Id", "CreatedDate", "Name", "Status", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"), new DateTime(2024, 11, 24, 16, 22, 36, 681, DateTimeKind.Utc).AddTicks(1881), "Admin", null, new DateTime(2024, 11, 24, 16, 22, 36, 681, DateTimeKind.Utc).AddTicks(1890) },
-                    { new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), new DateTime(2024, 11, 24, 16, 22, 36, 681, DateTimeKind.Utc).AddTicks(1894), "Customer", null, new DateTime(2024, 11, 24, 16, 22, 36, 681, DateTimeKind.Utc).AddTicks(1894) }
+                    { new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"), new DateTime(2024, 11, 24, 23, 6, 42, 114, DateTimeKind.Utc).AddTicks(2231), "Admin", null, new DateTime(2024, 11, 24, 23, 6, 42, 114, DateTimeKind.Utc).AddTicks(2240) },
+                    { new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), new DateTime(2024, 11, 24, 23, 6, 42, 114, DateTimeKind.Utc).AddTicks(2244), "Customer", null, new DateTime(2024, 11, 24, 23, 6, 42, 114, DateTimeKind.Utc).AddTicks(2244) }
                 });
 
             migrationBuilder.InsertData(
@@ -136,23 +136,23 @@ namespace DataAccessLayer.Migrations
                 columns: new[] { "Id", "Address", "CreatedDate", "Dob", "Email", "FullName", "Gender", "Password", "PhoneNumber", "RoleId", "Status", "UpdatedDate", "Username" },
                 values: new object[,]
                 {
-                    { new Guid("13ebfc3b-a208-48b2-bf17-eafbb47c8abf"), null, new DateTime(2024, 11, 24, 16, 22, 36, 690, DateTimeKind.Utc).AddTicks(944), null, null, "Customer 2", null, "SGVpB8uWfV54Y+iMaHIoZqfdiBFPB3C1lcYNoaYNqCDtdgyH", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 690, DateTimeKind.Utc).AddTicks(945), "Customer2" },
-                    { new Guid("25094731-0dd2-4e34-b0b1-cc4f12d1218e"), null, new DateTime(2024, 11, 24, 16, 22, 36, 684, DateTimeKind.Utc).AddTicks(1337), null, null, "Admin 2", null, "VaTRJ+GiXRygV180D67YAqqRt3ouHnObXW/LJzBeZSYGtVuW", "123456789", new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"), null, new DateTime(2024, 11, 24, 16, 22, 36, 684, DateTimeKind.Utc).AddTicks(1337), "Admin2" },
-                    { new Guid("285c2b83-1372-4f7e-a4f1-9ba5d285f745"), null, new DateTime(2024, 11, 24, 16, 22, 36, 723, DateTimeKind.Utc).AddTicks(3679), null, null, "Customer 13", null, "RWF0WXYf2rT1TlVB+38GFBxSPZ7OKckbPdfSD3OkkDt2y5BH", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 723, DateTimeKind.Utc).AddTicks(3679), "Customer13" },
-                    { new Guid("2a226b52-85e3-4980-b351-44c63c041a23"), null, new DateTime(2024, 11, 24, 16, 22, 36, 717, DateTimeKind.Utc).AddTicks(3946), null, null, "Customer 11", null, "hJVacPPeEVlo2YZ8wd6jCk+ljjoY5fux1IaHbi0bCDFegfAC", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 717, DateTimeKind.Utc).AddTicks(3946), "Customer11" },
-                    { new Guid("343f69d9-58df-4138-9eed-e1c57d57c1c9"), null, new DateTime(2024, 11, 24, 16, 22, 36, 699, DateTimeKind.Utc).AddTicks(2108), null, null, "Customer 5", null, "KZK77jGphy9IwrfPhlqtS4jEyjCv89nm0af8ss+BiKAGvJel", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 699, DateTimeKind.Utc).AddTicks(2108), "Customer5" },
-                    { new Guid("487c1f41-09ef-4709-a973-baf9791b2496"), null, new DateTime(2024, 11, 24, 16, 22, 36, 705, DateTimeKind.Utc).AddTicks(2148), null, null, "Customer 7", null, "WvFFAK7zwWntkgtu+s7VuCTnut0XSBHSX1mYwiq6utGWvtwc", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 705, DateTimeKind.Utc).AddTicks(2152), "Customer7" },
-                    { new Guid("4942612a-10d2-4256-b7c1-7cfc9fcc8606"), null, new DateTime(2024, 11, 24, 16, 22, 36, 696, DateTimeKind.Utc).AddTicks(1299), null, null, "Customer 4", null, "toeujrfk7dSbyCAYYzZEcCTtn6enKuv72dfFMjoMo/2ADrXk", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 696, DateTimeKind.Utc).AddTicks(1300), "Customer4" },
-                    { new Guid("6e8855fe-c1ea-42ff-9773-f46d05d02f8c"), null, new DateTime(2024, 11, 24, 16, 22, 36, 681, DateTimeKind.Utc).AddTicks(2023), null, null, "Admin 1", null, "ZzTC4pDV4YTuklbaVpd6P0eu6U1hEiR2V3aL09N1F3SsI/CZ", "123456789", new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"), null, new DateTime(2024, 11, 24, 16, 22, 36, 681, DateTimeKind.Utc).AddTicks(2024), "Admin1" },
-                    { new Guid("6ea8b671-c546-48c4-8f33-b822d4ea90a1"), null, new DateTime(2024, 11, 24, 16, 22, 36, 729, DateTimeKind.Utc).AddTicks(2905), null, null, "Customer 15", null, "UZSosDsrZZNYjjhq4rPn7Qmx81boFcnDOQMYQ1l7x4wbpEWT", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 729, DateTimeKind.Utc).AddTicks(2905), "Customer15" },
-                    { new Guid("8cb777ea-ed9b-4336-9feb-48deb536dfa1"), null, new DateTime(2024, 11, 24, 16, 22, 36, 711, DateTimeKind.Utc).AddTicks(3957), null, null, "Customer 9", null, "/d+P3btvdjl4mNEjKwVQOy87tK+cTYG/hDLArg5zz8uHYhsz", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 711, DateTimeKind.Utc).AddTicks(3967), "Customer9" },
-                    { new Guid("a4de10b4-0586-46c9-8b21-fcd06ac6aff3"), null, new DateTime(2024, 11, 24, 16, 22, 36, 726, DateTimeKind.Utc).AddTicks(3440), null, null, "Customer 14", null, "Ythpq0XRAV8+4XWDJUkg3O20ERUZYj1eFoaGfcxfOv4JMVdS", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 726, DateTimeKind.Utc).AddTicks(3440), "Customer14" },
-                    { new Guid("c2b8dfee-321b-4bf6-8a45-ccff991d3315"), null, new DateTime(2024, 11, 24, 16, 22, 36, 720, DateTimeKind.Utc).AddTicks(3513), null, null, "Customer 12", null, "ZGp8PfSLQjPB9buToepyzf5rw1xzHDwq2so+o6O2C+GNlMIR", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 720, DateTimeKind.Utc).AddTicks(3517), "Customer12" },
-                    { new Guid("c792280c-0307-4dcd-ad2b-5c2e8bbfc99f"), null, new DateTime(2024, 11, 24, 16, 22, 36, 702, DateTimeKind.Utc).AddTicks(2329), null, null, "Customer 6", null, "ebujxxFQaF9A0ldE3j9EGoZDHw4hZiEuWJr+6zsfIYSOOjkA", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 702, DateTimeKind.Utc).AddTicks(2333), "Customer6" },
-                    { new Guid("ca24526e-bda1-43db-9ad7-49a03672a13d"), null, new DateTime(2024, 11, 24, 16, 22, 36, 714, DateTimeKind.Utc).AddTicks(4056), null, null, "Customer 10", null, "4q5eUlnLZHNtV5mpQb3aCpCnXSFWq4XOwOV+4jy1kQbZoxOV", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 714, DateTimeKind.Utc).AddTicks(4057), "Customer10" },
-                    { new Guid("d86248fb-ea9b-4fcd-b662-194148cd95c9"), null, new DateTime(2024, 11, 24, 16, 22, 36, 687, DateTimeKind.Utc).AddTicks(1252), null, null, "Customer 1", null, "ew/WcbTC9NDulDl9CNtvkP29WhOtnMy9Mlx4IvpmcHTpJcFQ", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 687, DateTimeKind.Utc).AddTicks(1252), "Customer1" },
-                    { new Guid("e2a039fe-a42f-47d2-a449-f95972ff9630"), null, new DateTime(2024, 11, 24, 16, 22, 36, 693, DateTimeKind.Utc).AddTicks(1365), null, null, "Customer 3", null, "U4CbFXvLCzuyZiPynlPt5sGjXg13W3241+Qt+iGERLkN5ZMI", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 693, DateTimeKind.Utc).AddTicks(1366), "Customer3" },
-                    { new Guid("ead045a4-784d-4355-930c-88f97a4c1f3c"), null, new DateTime(2024, 11, 24, 16, 22, 36, 708, DateTimeKind.Utc).AddTicks(2899), null, null, "Customer 8", null, "dAmbdlCjZ53JJMc8o5cSwu0cagVixX5MKRRzTcCfNqsLmfKg", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 16, 22, 36, 708, DateTimeKind.Utc).AddTicks(2900), "Customer8" }
+                    { new Guid("092be2a9-c8f5-4972-b1d2-fb110af8f029"), null, new DateTime(2024, 11, 24, 23, 6, 42, 148, DateTimeKind.Utc).AddTicks(213), null, null, "Customer 10", null, "StuDtkRqfLWgTVg6iBw4Ra9eLrAp2ZabelKznpIho2/29YOh", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 148, DateTimeKind.Utc).AddTicks(213), "Customer10" },
+                    { new Guid("2845c934-4532-420d-8b79-87f0a2af8954"), null, new DateTime(2024, 11, 24, 23, 6, 42, 129, DateTimeKind.Utc).AddTicks(4729), null, null, "Customer 4", null, "0BKpTMwHjRnQloifd31lTJGmFdT8jjXS2Y1vQRT8IlWwpce9", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 129, DateTimeKind.Utc).AddTicks(4730), "Customer4" },
+                    { new Guid("32835ef7-d7ab-4c7c-88a8-f4fd40d75dad"), null, new DateTime(2024, 11, 24, 23, 6, 42, 120, DateTimeKind.Utc).AddTicks(4107), null, null, "Customer 1", null, "aWhkUoP7OEybXwQGwpjycbWp4HTnz2KfqdYBnMtTFkzm582l", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 120, DateTimeKind.Utc).AddTicks(4111), "Customer1" },
+                    { new Guid("43c46811-0b29-4c91-8eff-a67369a5ca8d"), null, new DateTime(2024, 11, 24, 23, 6, 42, 123, DateTimeKind.Utc).AddTicks(4151), null, null, "Customer 2", null, "wsfS5lgqFHdRKDeA87Z0QY/kKBHIcpQ/gggEC9riFovVbMig", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 123, DateTimeKind.Utc).AddTicks(4152), "Customer2" },
+                    { new Guid("4af09939-9312-4521-8780-8d49f1e9ccd4"), null, new DateTime(2024, 11, 24, 23, 6, 42, 157, DateTimeKind.Utc).AddTicks(603), null, null, "Customer 13", null, "0jhZ76kEGUOjTjBXRDRT8YbXzuwY9924ENBKzn8dRdUhzLzt", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 157, DateTimeKind.Utc).AddTicks(604), "Customer13" },
+                    { new Guid("503ddd69-0f19-4b48-92de-c8e15a0e9e1d"), null, new DateTime(2024, 11, 24, 23, 6, 42, 144, DateTimeKind.Utc).AddTicks(9694), null, null, "Customer 9", null, "DvlNh82CPRcw2d4Xp/qmN3uz1h++GWiBr+AEzSi2zO9NEMj2", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 144, DateTimeKind.Utc).AddTicks(9702), "Customer9" },
+                    { new Guid("5a74f9e4-3358-45db-958f-37b58b3255e3"), null, new DateTime(2024, 11, 24, 23, 6, 42, 114, DateTimeKind.Utc).AddTicks(2402), null, null, "Admin 1", null, "eoYOJ66vJAgFTXisR4XubpyJN30P5k9NuFVgBeoWHYXizuxi", "123456789", new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"), null, new DateTime(2024, 11, 24, 23, 6, 42, 114, DateTimeKind.Utc).AddTicks(2402), "Admin1" },
+                    { new Guid("7777a24a-4b2e-4b7e-b14c-2c066dab0b53"), null, new DateTime(2024, 11, 24, 23, 6, 42, 135, DateTimeKind.Utc).AddTicks(7184), null, null, "Customer 6", null, "jHg+s47EpYXNGlGuuomlZlMykMoewG6QoK2EG5/jdjASUkYl", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 135, DateTimeKind.Utc).AddTicks(7184), "Customer6" },
+                    { new Guid("898d9a28-7f48-4bc6-8ead-2890f7993d42"), null, new DateTime(2024, 11, 24, 23, 6, 42, 163, DateTimeKind.Utc).AddTicks(1769), null, null, "Customer 15", null, "7PZnNsUcasVc+8svy+jtreeq6dP31n387EBr4JJ1VOx8GDhk", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 163, DateTimeKind.Utc).AddTicks(1769), "Customer15" },
+                    { new Guid("99cd22b8-fa62-41f5-9a6f-05a1d60d431c"), null, new DateTime(2024, 11, 24, 23, 6, 42, 117, DateTimeKind.Utc).AddTicks(2974), null, null, "Admin 2", null, "Bcvpw/jUZthtQbo8X9uQl09llI/m/lZCPnckZ9N5D0cfkrNt", "123456789", new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"), null, new DateTime(2024, 11, 24, 23, 6, 42, 117, DateTimeKind.Utc).AddTicks(2974), "Admin2" },
+                    { new Guid("a88fc8d0-7f69-4c04-815d-0562d552dc64"), null, new DateTime(2024, 11, 24, 23, 6, 42, 141, DateTimeKind.Utc).AddTicks(8238), null, null, "Customer 8", null, "uG5Tx8PGtpnLCh8j+wvNKGMF8brEXapOm446TLlSkx/WP5L8", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 141, DateTimeKind.Utc).AddTicks(8239), "Customer8" },
+                    { new Guid("c844df94-fca8-430e-a778-bd30777b671e"), null, new DateTime(2024, 11, 24, 23, 6, 42, 160, DateTimeKind.Utc).AddTicks(1434), null, null, "Customer 14", null, "UcRrM2NRXNrS7pfQRrQi5UpyTgmNIFP9LQ7+Y/gdnviY42qb", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 160, DateTimeKind.Utc).AddTicks(1435), "Customer14" },
+                    { new Guid("e9ea8474-ca77-487d-9f56-2f9b63cd8db9"), null, new DateTime(2024, 11, 24, 23, 6, 42, 126, DateTimeKind.Utc).AddTicks(4224), null, null, "Customer 3", null, "AlAsDCTnNTbhk9OnSNNnusM0DMJeIz3suyOsSL+8yjp13p4b", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 126, DateTimeKind.Utc).AddTicks(4224), "Customer3" },
+                    { new Guid("ecd1be51-2688-4acb-8794-6e73d15533a9"), null, new DateTime(2024, 11, 24, 23, 6, 42, 132, DateTimeKind.Utc).AddTicks(7311), null, null, "Customer 5", null, "tkyEahq4NeRJ4hzc50Zh+m3nYf2HfDkhRPwMK7a4+1p9ER8v", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 132, DateTimeKind.Utc).AddTicks(7326), "Customer5" },
+                    { new Guid("f1ba2a9e-d38d-4fc5-b9f8-2cf6e321ef3f"), null, new DateTime(2024, 11, 24, 23, 6, 42, 138, DateTimeKind.Utc).AddTicks(7517), null, null, "Customer 7", null, "Jz+LqjeOaxFvWLAnd51ysI74RM/fiQbl43x44LkTu8C4jqSL", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 138, DateTimeKind.Utc).AddTicks(7518), "Customer7" },
+                    { new Guid("fc384321-75b7-497c-a5d5-7a66052233f3"), null, new DateTime(2024, 11, 24, 23, 6, 42, 151, DateTimeKind.Utc).AddTicks(359), null, null, "Customer 11", null, "BIK5jxW3614ojWFsn5VANXCu9ZFPjjy9kbYnk6No2kcR+lJa", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 151, DateTimeKind.Utc).AddTicks(360), "Customer11" },
+                    { new Guid("fde6ab79-7c76-449e-ae4d-032acaea96ec"), null, new DateTime(2024, 11, 24, 23, 6, 42, 154, DateTimeKind.Utc).AddTicks(464), null, null, "Customer 12", null, "GI8z2RW0zclf5zWTf1pbcJg4yMMMrRL4YlEVjILewHtx5Kjl", "123456789", new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"), null, new DateTime(2024, 11, 24, 23, 6, 42, 154, DateTimeKind.Utc).AddTicks(464), "Customer12" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -164,7 +164,8 @@ namespace DataAccessLayer.Migrations
                 name: "IX_Transaction_PostId",
                 table: "Transaction",
                 column: "PostId",
-                unique: true);
+                unique: true,
+                filter: "[PostId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_UserId",

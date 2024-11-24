@@ -65,8 +65,10 @@ namespace BusinessLogicLayer.Services.Implements
 
         public async Task<Post> GetPostByIdAsync(Guid id)
         {
-            return (await _unitOfWork.Repository<Post>().GetWhere(post => post.Id == id))
-                   .SingleOrDefault();
+            return await _unitOfWork.Repository<Post>().AsQueryable(p => p.Id == id)
+                    .Include(u => u.User)
+                    .Include(u => u.Transaction)
+                    .FirstOrDefaultAsync();
         }
 
         public async Task CreatePostAsync(Post post)

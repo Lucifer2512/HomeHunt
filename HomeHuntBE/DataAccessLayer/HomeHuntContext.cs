@@ -52,7 +52,7 @@ public class HomeHuntContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
             entity.ToTable("Post");
-            entity.Property(e => e.Price)
+            entity.Property(e => e.RentPrice)
                 .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Deposit)
                 .HasColumnType("decimal(18, 2)");

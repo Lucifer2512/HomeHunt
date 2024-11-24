@@ -7,11 +7,11 @@ namespace DataAccessLayer.Models;
 
 public partial class Post : BaseEntity
 {
-    public string? Title { get; set; }
+    public string? PostTitle { get; set; }
     public string? Description { get; set; }
     public string? BuildingName { get; set; }
-    public List<string>? ImageUrl { get; set; }
-    public decimal? Price { get; set; }
+    public List<string>? Images { get; set; }
+    public decimal? RentPrice { get; set; }
     public string? Address { get; set; }
     public string? PropertyType { get; set; }
     public string? ApartmentNumber { get; set; }

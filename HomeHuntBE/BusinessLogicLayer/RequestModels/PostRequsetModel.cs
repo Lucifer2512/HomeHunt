@@ -10,9 +10,8 @@ namespace BusinessLogicLayer.RequestModels
     {
         //public string Field { get; set; } = null!;
         //public Guid RoomId { get; set; }
-        public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public List<string>? ImageUrl { get; set; } = null!;
+        public List<string>? Images { get; set; } = null!;
         public string BuildingName { get; set; } = null!;
         public decimal Price { get; set; }= 0!;
         public string Address { get; set; }= null!;
@@ -35,9 +34,9 @@ namespace BusinessLogicLayer.RequestModels
     {
         //public string Field { get; set; } = null!;
         //public Guid RoomId { get; set; }
-        public string? Title { get; set; } = null!;
+        public string? PostTitle { get; set; } = null!;
         public string? Description { get; set; } = null!;
-        public List<string>? ImageUrl { get; set; } = null!;
+        public List<string>? Images { get; set; } = null!;
         public string? BuildingName { get; set; } = null!;
         public decimal? Price { get; set; } = 0!;
         public string? Address { get; set; } = null!;

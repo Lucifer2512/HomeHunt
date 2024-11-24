@@ -24,7 +24,6 @@ namespace HomeHuntAPI.Controller
 
         // GET: api/Post
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<PostResponseModel>>> GetPosts(bool? status)
         {
             try
@@ -38,11 +37,11 @@ namespace HomeHuntAPI.Controller
                     {
                         Id = post.Id,
                         Phoneseller = post.User?.PhoneNumber, // Safe navigation for nullable User
-                        PostTitle = post.Title,
+                        PostTitle = post.PostTitle,
                         Description = post.Description,
                         BuildingName = post.BuildingName,
-                        Images = post.ImageUrl,
-                        RentPrice = post.Price,
+                        Images = post.Images,
+                        RentPrice = post.RentPrice,
                         Address = post.Address,
                         PropertyType = post.PropertyType,
                         ApartmentNumber = post.ApartmentNumber,
@@ -73,8 +72,7 @@ namespace HomeHuntAPI.Controller
 
         // GET: api/Post/1
         [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<Post>> GetPost(Guid id)
+        public async Task<ActionResult<PostResponseModel>> GetPost(Guid id)
         {
             var post = await _postServices.GetPostByIdAsync(id);
             if (post == null)
@@ -82,7 +80,34 @@ namespace HomeHuntAPI.Controller
                 return NotFound();
             }
 
-            return Ok(post);
+            var response = new PostResponseModel
+            {
+                Id = post.Id,
+                Phoneseller = post.User?.PhoneNumber,
+                PostTitle = post.PostTitle,
+                Description = post.Description,
+                BuildingName = post.BuildingName,
+                Images = post.Images,
+                RentPrice = post.RentPrice,
+                Address = post.Address,
+                PropertyType = post.PropertyType,
+                ApartmentNumber = post.ApartmentNumber,
+                Block = post.Block,
+                Floor = post.Floor,
+                ApartmentType = post.ApartmentType,
+                Bedrooms = post.Bedrooms,
+                Bathrooms = post.Bathrooms,
+                LegalDocument = post.LegalDocument,
+                FurnitureCondition = post.FurnitureCondition,
+                Area = post.Area,
+                Deposit = post.Deposit,
+                UserId = post.UserId,
+                TransactionId = post.TransactionId,
+                Status = post.Status,
+                TransactionStatus = post.Transaction?.Status
+            };
+
+            return Ok(response);
         }
 
         // POST: api/Posts
@@ -92,11 +117,11 @@ namespace HomeHuntAPI.Controller
         {
             var post = new Post
             {
-                Title = postModel.Title,
+                PostTitle = postModel.PostTitle,
                 Description = postModel.Description,
-                ImageUrl = postModel.ImageUrl,
+                Images = postModel.Images,
                 BuildingName = postModel.BuildingName,
-                Price = postModel.Price,
+                RentPrice = postModel.Price,
                 Address = postModel.Address,
                 PropertyType = postModel.PropertyType,
                 ApartmentNumber = postModel.ApartmentNumber,
@@ -131,20 +156,20 @@ namespace HomeHuntAPI.Controller
             }
 
             // Skip updating if the value is null
-            if (!string.IsNullOrEmpty(postModel.Title))
-            { post.Title = postModel.Title; }
+            if (!string.IsNullOrEmpty(postModel.PostTitle))
+            { post.PostTitle = postModel.PostTitle; }
 
             if (!string.IsNullOrEmpty(postModel.Description))
             { post.Description = postModel.Description; }
 
-            if (postModel.ImageUrl != null)
-            { post.ImageUrl = postModel.ImageUrl; }
+            if (postModel.Images != null)
+            { post.Images = postModel.Images; }
 
             if (!string.IsNullOrEmpty(postModel.BuildingName))
             { post.BuildingName = postModel.BuildingName; }
 
             if (postModel.Price.HasValue)
-            { post.Price = postModel.Price.Value; }
+            { post.RentPrice = postModel.Price.Value; }
 
             if (!string.IsNullOrEmpty(postModel.Address))
             { post.Address = postModel.Address; }
