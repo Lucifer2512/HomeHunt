@@ -23,26 +23,42 @@ namespace BusinessLogicLayer.Services.Implements
             IEnumerable<Post> posts = null;
             if (Status.HasValue)
             {
-                posts = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status.Value).Include(u => u.User).ToListAsync();
+                posts = await _unitOfWork.Repository<Post>()
+                    .AsQueryable(p => p.Status == Status.Value)
+                    .Include(u => u.User)
+                    .Include(u => u.Transaction)
+                    .ToListAsync();
             }
             else
             {
-                posts = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status).Include(u => u.User).ToListAsync();
+                posts = await _unitOfWork.Repository<Post>()
+                    .AsQueryable(p => p.Status == Status)
+                    .Include(u => u.User)
+                    .Include(u => u.Transaction)
+                    .ToListAsync();
             }
 
             return posts;
         }
 
-        public async Task<Post> GetPostByIdAsyncAndStatus(Guid id, bool? Status)
+        public async Task<Post> GetPostByIdAndStatus(Guid id, bool? Status)
         {
             Post post = null;
             if (Status.HasValue)
             {
-                post = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status.Value).Include(u => u.User).FirstOrDefaultAsync();
+                post = await _unitOfWork.Repository<Post>()
+                    .AsQueryable(p => p.Status == Status.Value)
+                    .Include(u => u.User)
+                    .Include(u => u.Transaction)
+                    .FirstOrDefaultAsync();
             }
             else
             {
-                post = await _unitOfWork.Repository<Post>().AsQueryable(p => p.Status == Status).Include(u => u.User).FirstOrDefaultAsync();
+                post = await _unitOfWork.Repository<Post>()
+                    .AsQueryable(p => p.Status == Status)
+                    .Include(u => u.User)
+                    .Include(u => u.Transaction)
+                    .FirstOrDefaultAsync();
             }
             return post;
         }

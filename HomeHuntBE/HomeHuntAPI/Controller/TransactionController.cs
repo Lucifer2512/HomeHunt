@@ -44,9 +44,9 @@ namespace HomeHuntAPI.Controller
         }
 
         [HttpPost("create-payment-link")]
-        public async Task<IActionResult> CreatePaymentLink([FromBody] CreatePaymentLinkRequest body, [FromQuery] string phone)
+        public async Task<IActionResult> CreatePaymentLink([FromBody] CreatePaymentLinkRequest body, [FromQuery] string phone, [FromQuery] Guid postId, [FromQuery] Guid transactionId)
         {
-            var response = await _transactionService.CreatePaymentLink(body, phone);
+            var response = await _transactionService.CreatePaymentLink(body, phone, postId, transactionId);
             if (response.error == 0)
             {
                 return Ok(response);

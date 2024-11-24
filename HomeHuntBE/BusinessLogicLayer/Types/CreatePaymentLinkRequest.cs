@@ -5,6 +5,6 @@ public record CreatePaymentLinkRequest(
     int price,
     string? returnUrl,
     string? cancelUrl,
-    string buyerName,
-    string buyerPhone
+    string? buyerName,
+    string? buyerPhone
 );

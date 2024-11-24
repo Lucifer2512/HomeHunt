@@ -29,7 +29,9 @@ namespace BusinessLogicLayer.ResponseModels
         public string? Area { get; set; }
         public decimal? Deposit { get; set; }
         public Guid? UserId { get; set; }
+        public Guid? TransactionId { get; set; }
         public bool? Status { get; set; }
+        public bool? TransactionStatus { get; set; }
 
     }
 }

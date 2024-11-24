@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Services.Interfaces
 
         Task<Response> GetOrderByUserId(Guid userId);
 
-        Task<Response> CreatePaymentLink(CreatePaymentLinkRequest body, string Phone);
+        Task<Response> CreatePaymentLink(CreatePaymentLinkRequest body, string Phone, Guid postId, Guid transactionId);
 
         Task<Response> GetOrder(int orderCode);
 

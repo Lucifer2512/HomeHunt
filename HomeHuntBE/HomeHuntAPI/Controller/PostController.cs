@@ -37,7 +37,7 @@ namespace HomeHuntAPI.Controller
                     var postView = new PostResponseModel
                     {
                         Id = post.Id,
-                        Phoneseller = post.User.PhoneNumber,
+                        Phoneseller = post.User?.PhoneNumber, // Safe navigation for nullable User
                         PostTitle = post.Title,
                         Description = post.Description,
                         BuildingName = post.BuildingName,
@@ -56,25 +56,27 @@ namespace HomeHuntAPI.Controller
                         Area = post.Area,
                         Deposit = post.Deposit,
                         UserId = post.UserId,
+                        TransactionId = post.TransactionId,
                         Status = post.Status,
+                        TransactionStatus = post.Transaction?.Status // Check for null Transaction
                     };
                     postList.Add(postView);
-    }
+                }
                 return Ok(postList);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                Console.WriteLine(ex);
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-
         }
 
         // GET: api/Post/1
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Post>> GetPost(Guid id, bool status)
+        public async Task<ActionResult<Post>> GetPost(Guid id)
         {
-            var post = await _postServices.GetPostByIdAsyncAndStatus(id, status);
+            var post = await _postServices.GetPostByIdAsync(id);
             if (post == null)
             {
                 return NotFound();
@@ -108,6 +110,7 @@ namespace HomeHuntAPI.Controller
                 Area = postModel.Area,
                 Deposit = postModel.Deposit,
                 UserId = postModel.UserId,
+                TransactionId = Guid.NewGuid(),
                 Status = null
             };
 

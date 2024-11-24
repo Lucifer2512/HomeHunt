@@ -18,7 +18,6 @@ public class HomeHuntContext : DbContext
     {
     }
 
-
     public virtual DbSet<Post> Posts { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -54,13 +53,17 @@ public class HomeHuntContext : DbContext
                 .ValueGeneratedOnAdd();
             entity.ToTable("Post");
             entity.Property(e => e.Price)
-                .HasColumnType("decimal(18, 4)");
+                .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Deposit)
-                .HasColumnType("decimal(18, 4)");
+                .HasColumnType("decimal(18, 2)");
             entity.HasOne(d => d.User).WithMany(p => p.Posts)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("post_userid_foreign");
+            entity.HasOne(d => d.Transaction).WithOne(p => p.Post)
+                .HasForeignKey<Transaction>(t => t.PostId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("post_transactionid_foreign");
 
         });
 
@@ -71,7 +74,7 @@ public class HomeHuntContext : DbContext
                 .ValueGeneratedOnAdd();
             entity.ToTable("Transaction");
             entity.Property(e => e.Price)
-                .HasColumnType("decimal(18, 4)");
+                .HasColumnType("decimal(18, 2)");
             entity.HasOne(d => d.User).WithMany(p => p.Transactions)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

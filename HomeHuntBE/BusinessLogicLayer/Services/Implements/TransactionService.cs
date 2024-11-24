@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Transaction = DataAccessLayer.Models.Transaction;
 using Microsoft.EntityFrameworkCore;
+using Azure.Core;
 
 namespace BusinessLogicLayer.Services.Implements
 {
@@ -61,7 +62,7 @@ namespace BusinessLogicLayer.Services.Implements
             }
         }
 
-        public async Task<Response> CreatePaymentLink(CreatePaymentLinkRequest body, string Phone)
+        public async Task<Response> CreatePaymentLink(CreatePaymentLinkRequest body, string Phone, Guid postId, Guid transactionId)
         {
             try
             {
@@ -103,8 +104,10 @@ namespace BusinessLogicLayer.Services.Implements
 
                 var paymentTransaction = new Transaction
                 {
+                    Id = transactionId,
                     TransactionCode = orderCode,
                     UserId = user.Id,
+                    PostId = postId,
                     Price = body.price,
                     Status = null,
                 };
@@ -137,13 +140,34 @@ namespace BusinessLogicLayer.Services.Implements
         {
             try
             {
+                // Fetch the transaction data
+                var transaction = await _unitOfWork.Repository<Transaction>()
+                    .AsQueryable(p => p.TransactionCode == orderCode)
+                    .Include(u => u.User)
+                    .Include(u => u.Post)
+                    .FirstOrDefaultAsync();
+
+                if (transaction == null)
+                {
+                    return new Response(-1, "Transaction not found", null);
+                }
+
+                // Fetch payment link information
                 PaymentLinkInformation paymentLinkInformation = await _payOS.getPaymentLinkInformation(orderCode);
-                return new Response(0, "Ok", paymentLinkInformation);
+
+                // Create a combined result
+                var result = new
+                {
+                    Transaction = transaction,
+                    PaymentLinkInformation = paymentLinkInformation
+                };
+
+                return new Response(0, "Ok", result);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return new Response(-1, "fail", null);
+                return new Response(-1, "Fail", null);
             }
         }
 
@@ -151,7 +175,22 @@ namespace BusinessLogicLayer.Services.Implements
         {
             try
             {
+                var paymentTransaction = (await _unitOfWork.Repository<Transaction>()
+                    .GetWhere(pt => pt.TransactionCode == orderCode)).SingleOrDefault();
+
+                if (paymentTransaction == null)
+                {
+                    return new Response(-1, "Transaction not found", null);
+                }
+
+                paymentTransaction.Status = false;
+                paymentTransaction.UpdatedDate = DateTime.UtcNow.AddHours(7);
+                await _unitOfWork.Repository<Transaction>().UpdateGuid(paymentTransaction, paymentTransaction.Id);
+                await _unitOfWork.CommitAsync();
+
+
                 PaymentLinkInformation paymentLinkInformation = await _payOS.cancelPaymentLink(orderCode, reason);
+
                 return new Response(0, "Ok", paymentLinkInformation);
             }
             catch (Exception exception)
@@ -185,6 +224,7 @@ namespace BusinessLogicLayer.Services.Implements
                     return new Response(-1, "User not found", null);
                 }
 
+
                 PaymentLinkInformation paymentLinkInformation = await _payOS.getPaymentLinkInformation(request.OrderCode);
 
                 if (paymentLinkInformation == null)
@@ -205,9 +245,7 @@ namespace BusinessLogicLayer.Services.Implements
                     // Update transaction
                     paymentTransaction.Status = true;
                     paymentTransaction.UpdatedDate = DateTime.UtcNow.AddHours(7);
-                    _unitOfWork.Repository<Transaction>().UpdateGuid(paymentTransaction, paymentTransaction.Id);
-
-
+                    await _unitOfWork.Repository<Transaction>().UpdateGuid(paymentTransaction, paymentTransaction.Id);
                     await _unitOfWork.CommitAsync();
 
                     var updatedUserInfo = new
@@ -219,6 +257,33 @@ namespace BusinessLogicLayer.Services.Implements
 
 
                     return new Response(0, "Transaction Complete",
+                        new { paymentInfo = paymentLinkInformation, userInfo = updatedUserInfo });
+                }
+                else if (paymentLinkInformation.status == "CANCELLED")
+                {
+                    var paymentTransaction = (await _unitOfWork.Repository<Transaction>()
+                        .GetWhere(pt => pt.TransactionCode == request.OrderCode)).SingleOrDefault();
+
+                    if (paymentTransaction == null)
+                    {
+                        return new Response(-1, "Transaction not found", null);
+                    }
+
+                    // Update transaction
+                    paymentTransaction.Status = false;
+                    paymentTransaction.UpdatedDate = DateTime.UtcNow.AddHours(7);
+                    await _unitOfWork.Repository<Transaction>().UpdateGuid(paymentTransaction, paymentTransaction.Id);
+                    await _unitOfWork.CommitAsync();
+
+                    var updatedUserInfo = new
+                    {
+                        user.Id,
+                        user.FullName,
+                        user.PhoneNumber,
+                    };
+
+
+                    return new Response(0, "Transaction Cancelled",
                         new { paymentInfo = paymentLinkInformation, userInfo = updatedUserInfo });
                 }
                 else

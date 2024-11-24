@@ -4,6 +4,7 @@ using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(HomeHuntContext))]
-    partial class HomeHuntContextModelSnapshot : ModelSnapshot
+    [Migration("20241124093155_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("Deposit")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 4)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -74,7 +77,7 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 4)");
 
                     b.Property<string>("PropertyType")
                         .HasColumnType("nvarchar(max)");
@@ -131,16 +134,16 @@ namespace DataAccessLayer.Migrations
                         new
                         {
                             Id = new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 403, DateTimeKind.Utc).AddTicks(8151),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 556, DateTimeKind.Utc).AddTicks(1377),
                             Name = "Admin",
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 403, DateTimeKind.Utc).AddTicks(8161)
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 556, DateTimeKind.Utc).AddTicks(1388)
                         },
                         new
                         {
                             Id = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 403, DateTimeKind.Utc).AddTicks(8165),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 556, DateTimeKind.Utc).AddTicks(1392),
                             Name = "Customer",
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 403, DateTimeKind.Utc).AddTicks(8165)
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 556, DateTimeKind.Utc).AddTicks(1392)
                         });
                 });
 
@@ -157,7 +160,7 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(18, 4)");
 
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
@@ -255,189 +258,189 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f2fd2967-8017-4024-a03b-a273f9971a66"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 403, DateTimeKind.Utc).AddTicks(8318),
+                            Id = new Guid("6722eb35-3f74-4a70-9f2e-a0be5b80debf"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 556, DateTimeKind.Utc).AddTicks(1523),
                             FullName = "Admin 1",
-                            Password = "qVChB0NNRjpdK1le3EeY0OISsp8Ev7JdywAzn/Vgtr7Vr0Td",
+                            Password = "iFmI6rpDXtyfU3HmAyz36LuCs4ySDIkhMcZBsbFiBE/1QQuW",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 403, DateTimeKind.Utc).AddTicks(8319),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 556, DateTimeKind.Utc).AddTicks(1523),
                             Username = "Admin1"
                         },
                         new
                         {
-                            Id = new Guid("1c1999ca-01b7-4936-bda9-ce1bf5671dd9"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 406, DateTimeKind.Utc).AddTicks(7811),
+                            Id = new Guid("915905ba-f8a2-47e8-a619-5c426379e81f"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 558, DateTimeKind.Utc).AddTicks(9170),
                             FullName = "Admin 2",
-                            Password = "/f1FvU3Ajhr8q3T8+ZWQbbOwKQwW6KKcE1QI3dwRLWZTlPBo",
+                            Password = "FI2dqNLlWd9oyuQ25rJWkXL0ERp8Tx2Jii8qkCKv2OEW2ovM",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("8f82ec39-63e6-4cd4-95d2-091a656ae301"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 406, DateTimeKind.Utc).AddTicks(7812),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 558, DateTimeKind.Utc).AddTicks(9171),
                             Username = "Admin2"
                         },
                         new
                         {
-                            Id = new Guid("7f1edd88-ea8f-4d50-944b-277d35047376"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 409, DateTimeKind.Utc).AddTicks(7144),
+                            Id = new Guid("6fd9d888-fae7-446a-a969-f106711d166a"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 561, DateTimeKind.Utc).AddTicks(7641),
                             FullName = "Customer 1",
-                            Password = "aD8GuXdvl5tI4NNVYMvXnzoAdB+Ken+6ITLgKxM1NapksSdE",
+                            Password = "uU7Y2wTUsFhnepX+K0SQQVmPqnQNf8HOsMLZqlDljPd8KZjZ",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 409, DateTimeKind.Utc).AddTicks(7146),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 561, DateTimeKind.Utc).AddTicks(7644),
                             Username = "Customer1"
                         },
                         new
                         {
-                            Id = new Guid("1b50e379-ab7c-481b-973f-a5ce11c0847e"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 412, DateTimeKind.Utc).AddTicks(6241),
+                            Id = new Guid("8dcb57f1-e75d-4fd3-b9ab-88e61f6cdb89"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 564, DateTimeKind.Utc).AddTicks(5526),
                             FullName = "Customer 2",
-                            Password = "3wlrI7Gcrv+gs6dV0AKg9Vyv6zCS90ETApMZdCU7U3R9O8eA",
+                            Password = "PqUracNwtA34Il7gvpJp0BnB9evGU5SRit7OnQgR2e4bpRxA",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 412, DateTimeKind.Utc).AddTicks(6241),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 564, DateTimeKind.Utc).AddTicks(5526),
                             Username = "Customer2"
                         },
                         new
                         {
-                            Id = new Guid("1dff6f90-3218-44ac-8c0f-64dc4839b638"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 415, DateTimeKind.Utc).AddTicks(5959),
+                            Id = new Guid("590b72e7-152d-4b73-9c53-364a831bfc2b"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 567, DateTimeKind.Utc).AddTicks(3173),
                             FullName = "Customer 3",
-                            Password = "j70+px4CcpgNlxx0+u4kLReXYN7Kb+wSXZfAu7/WTX8CzS7v",
+                            Password = "Thdi3i5V8IuyiWsm3TcFf8C2AVK3soL4xzLEFMMedU0Lfqi3",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 415, DateTimeKind.Utc).AddTicks(5963),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 567, DateTimeKind.Utc).AddTicks(3174),
                             Username = "Customer3"
                         },
                         new
                         {
-                            Id = new Guid("0250cf6e-5d7c-4c54-ad02-022a2da5dab6"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 418, DateTimeKind.Utc).AddTicks(5379),
+                            Id = new Guid("78421daf-d7a0-490a-a9e1-5a65b044ed83"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 570, DateTimeKind.Utc).AddTicks(844),
                             FullName = "Customer 4",
-                            Password = "bDty53oH0u6fxpd9ibcYbdJhNkspNmudmurIqgyU4p+lx6VP",
+                            Password = "4DB06kgqx8/hgEl9NK43Bn04C4ipZqmWNgmv5LYGugBsNWw1",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 418, DateTimeKind.Utc).AddTicks(5380),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 570, DateTimeKind.Utc).AddTicks(845),
                             Username = "Customer4"
                         },
                         new
                         {
-                            Id = new Guid("276ab3f7-2e96-4b3e-9fd1-e94a323d8117"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 421, DateTimeKind.Utc).AddTicks(3824),
+                            Id = new Guid("436f062d-fcba-4010-b045-6d57a4c244e9"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 572, DateTimeKind.Utc).AddTicks(9046),
                             FullName = "Customer 5",
-                            Password = "SOMtZ4dBJ4JVch82uBU6yRP/hA3WYp/eD5ws7GDz47Xzm8ry",
+                            Password = "gLefSI60VXYuj9xgnrhdCAEdUyryWeBPpgoTbBvzMhXymff9",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 421, DateTimeKind.Utc).AddTicks(3825),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 572, DateTimeKind.Utc).AddTicks(9046),
                             Username = "Customer5"
                         },
                         new
                         {
-                            Id = new Guid("1dd00cbb-9515-4a31-8efa-223e78a8919d"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 424, DateTimeKind.Utc).AddTicks(1285),
+                            Id = new Guid("0d41ed62-f11c-4359-a274-0820db174d3a"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 575, DateTimeKind.Utc).AddTicks(6380),
                             FullName = "Customer 6",
-                            Password = "OqggDAUyyiMb7Nn1TOxQCHPB+uMBrvx3IlEu5qCdeekF08pJ",
+                            Password = "UKu1WzmKvu6YDMwvc6Di+rdYNJhdwd+SLe6odutFPHzHJEiL",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 424, DateTimeKind.Utc).AddTicks(1286),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 575, DateTimeKind.Utc).AddTicks(6380),
                             Username = "Customer6"
                         },
                         new
                         {
-                            Id = new Guid("265ec730-f37c-4c8a-b334-9bd587e59fbd"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 426, DateTimeKind.Utc).AddTicks(8666),
+                            Id = new Guid("59729a30-4b6d-4d75-abab-4d657e76dc25"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 578, DateTimeKind.Utc).AddTicks(3813),
                             FullName = "Customer 7",
-                            Password = "dveNkHLQAICMT6uuxgTAK2aHfv4GF9zVkDkfhv4lvsyCya8d",
+                            Password = "luiO+ImDZucnP6JcLcXeVdTOk/Y5uDntgaIdbCxfzVXXrtZL",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 426, DateTimeKind.Utc).AddTicks(8666),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 578, DateTimeKind.Utc).AddTicks(3813),
                             Username = "Customer7"
                         },
                         new
                         {
-                            Id = new Guid("5b6041f7-ded3-4257-9c97-af60fdfce06c"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 429, DateTimeKind.Utc).AddTicks(6000),
+                            Id = new Guid("16b67611-f69b-437e-87d2-c43726444e54"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 581, DateTimeKind.Utc).AddTicks(2218),
                             FullName = "Customer 8",
-                            Password = "ZlcqWRZdOYOh1ZIIEXkrre+7MtsADs4kCRnCtpZ5f1wW6egq",
+                            Password = "AhmrEUsub2zGcjMToGyTOUnUFNyLz0jw5HwmVrC91Cga5JDK",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 429, DateTimeKind.Utc).AddTicks(6001),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 581, DateTimeKind.Utc).AddTicks(2220),
                             Username = "Customer8"
                         },
                         new
                         {
-                            Id = new Guid("8b908bbe-2ad1-4aa8-8e16-3ef3f577859e"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 432, DateTimeKind.Utc).AddTicks(4199),
+                            Id = new Guid("164051b5-05a6-4537-8422-2f95f28b0dee"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 583, DateTimeKind.Utc).AddTicks(9851),
                             FullName = "Customer 9",
-                            Password = "ZovKir7yi9sPF0huE1AHz2Op2QljRzwE3aQA+8uzJ/Ga9c6b",
+                            Password = "yS7z+Z+8X77L9WMWyyQs3znxXE+wO1mmZAqyH30YErLnadl2",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 432, DateTimeKind.Utc).AddTicks(4199),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 583, DateTimeKind.Utc).AddTicks(9851),
                             Username = "Customer9"
                         },
                         new
                         {
-                            Id = new Guid("17833b13-2d9e-4891-b66e-a6769a6255ea"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 435, DateTimeKind.Utc).AddTicks(1671),
+                            Id = new Guid("4312b50d-a8f6-4af1-963e-4554046e7f7c"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 586, DateTimeKind.Utc).AddTicks(7303),
                             FullName = "Customer 10",
-                            Password = "T2b0ACCL7zDHVk9CrdhTlOXvQXspFEJ/u9qUVaUdmyLGXbu7",
+                            Password = "b/29AhnRuWVkko/+TScUQSPtniKansl1KoDGTNf2OzvXDb2Q",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 435, DateTimeKind.Utc).AddTicks(1671),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 586, DateTimeKind.Utc).AddTicks(7303),
                             Username = "Customer10"
                         },
                         new
                         {
-                            Id = new Guid("17c12695-d177-4fab-9351-c6061c5575bb"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 437, DateTimeKind.Utc).AddTicks(9176),
+                            Id = new Guid("b855f2cc-c03c-4b08-8b8e-b07440c681a6"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 589, DateTimeKind.Utc).AddTicks(5091),
                             FullName = "Customer 11",
-                            Password = "k47XA/lSnqLXYS+7r6QUqjDYngu7h13xQV0eV25dYaZV1Of9",
+                            Password = "hV3R8RffUx4AKiY9mMt7gQFIbZezBlYPJOclg6rpiMMVIVQO",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 437, DateTimeKind.Utc).AddTicks(9176),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 589, DateTimeKind.Utc).AddTicks(5092),
                             Username = "Customer11"
                         },
                         new
                         {
-                            Id = new Guid("fd43fc8a-8f1e-4dc7-8e56-1000ca7911a4"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 440, DateTimeKind.Utc).AddTicks(7240),
+                            Id = new Guid("2046f97c-964c-40e3-9079-2519a1c8651a"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 592, DateTimeKind.Utc).AddTicks(3224),
                             FullName = "Customer 12",
-                            Password = "oNFR5fQjydF/GL5mMevRjAiPwDf5fQDmK/31KozZ9wwbKbel",
+                            Password = "akQN65Ph9ZuFd91ogoUlsoxl6s7BZU4meuhcbbzz4Mq2BO35",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 440, DateTimeKind.Utc).AddTicks(7240),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 592, DateTimeKind.Utc).AddTicks(3225),
                             Username = "Customer12"
                         },
                         new
                         {
-                            Id = new Guid("a86e9178-afe9-4aaf-8b4a-1059381d5699"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 443, DateTimeKind.Utc).AddTicks(4776),
+                            Id = new Guid("39fdab54-434b-458d-a906-2664afa782de"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 595, DateTimeKind.Utc).AddTicks(3085),
                             FullName = "Customer 13",
-                            Password = "fzghfAIN9zVEg9E5YEmn0zfhaxxr3wn1wOToKFtjmexIqeIe",
+                            Password = "55gXMvC7TBv9c/IQr5Op0eG/2M6uCv0HcNHHOri0/exKWTwD",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 443, DateTimeKind.Utc).AddTicks(4777),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 595, DateTimeKind.Utc).AddTicks(3088),
                             Username = "Customer13"
                         },
                         new
                         {
-                            Id = new Guid("52838559-5c0c-45cb-ac92-f88e72fd7e70"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 446, DateTimeKind.Utc).AddTicks(2086),
+                            Id = new Guid("8ea53a34-702f-4112-b70a-0d836d4b16e5"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 598, DateTimeKind.Utc).AddTicks(565),
                             FullName = "Customer 14",
-                            Password = "2n0ikdoMkchyQ9ddtjXhEr9m8okiQUvC7ZQbtRugJhbTbpwy",
+                            Password = "t/htBCHJK+Wljk6VszXyoGdCaE5nsnUcOsIWj0/c2xu64Ot1",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 446, DateTimeKind.Utc).AddTicks(2086),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 598, DateTimeKind.Utc).AddTicks(566),
                             Username = "Customer14"
                         },
                         new
                         {
-                            Id = new Guid("5737d160-fefb-416f-b291-ab53cbcf62b7"),
-                            CreatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 449, DateTimeKind.Utc).AddTicks(398),
+                            Id = new Guid("83495983-2957-45af-adcb-7e29cbbb051e"),
+                            CreatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 600, DateTimeKind.Utc).AddTicks(7864),
                             FullName = "Customer 15",
-                            Password = "msBqN0g9LUudYexLkSBkqm1vzfMmCgDXB9Ss4aHPO85TQp0a",
+                            Password = "fFOofTnQkbTypM8X92XJ+IMQaSZehTqvm9l5p5lvto5QNDFH",
                             PhoneNumber = "123456789",
                             RoleId = new Guid("bcadf39b-13b8-4958-8472-61f4c993fbe5"),
-                            UpdatedDate = new DateTime(2024, 11, 24, 17, 57, 40, 449, DateTimeKind.Utc).AddTicks(401),
+                            UpdatedDate = new DateTime(2024, 11, 24, 16, 31, 55, 600, DateTimeKind.Utc).AddTicks(7864),
                             Username = "Customer15"
                         });
                 });

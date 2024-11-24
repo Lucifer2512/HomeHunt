@@ -24,7 +24,10 @@ public partial class Post : BaseEntity
     public string? FurnitureCondition { get; set; }
     public string? Area { get; set; }
     public decimal? Deposit { get; set; }
+    public Guid? TransactionId { get; set; }
     public Guid? UserId { get; set; }
+
+    public virtual Transaction Transaction { get; set; }
     public virtual User User { get; set; }
 }
 
