@@ -146,23 +146,23 @@ public class HomeHuntContext : DbContext
 
         // Seeding users with the appropriate RoleId
         modelBuilder.Entity<User>().HasData(
-            new User { Id = Guid.NewGuid(), Username = "Admin1", FullName = "Admin 1", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Admin2", FullName = "Admin 2", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer1", FullName = "Customer 1", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer2", FullName = "Customer 2", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer3", FullName = "Customer 3", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer4", FullName = "Customer 4", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer5", FullName = "Customer 5", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer6", FullName = "Customer 6", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer7", FullName = "Customer 7", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer8", FullName = "Customer 8", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer9", FullName = "Customer 9", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer10", FullName = "Customer 10", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer11", FullName = "Customer 11", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer12", FullName = "Customer 12", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer13", FullName = "Customer 13", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer14", FullName = "Customer 14", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
-            new User { Id = Guid.NewGuid(), Username = "Customer15", FullName = "Customer 15", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId }
+            new User { Id = Guid.NewGuid(), Username = "Admin", FullName = "Admin ", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Admin2", FullName = "Admin 2", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = adminRoleId },
+            new User { Id = Guid.NewGuid(), Username = "Customer", FullName = "Customer ", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId }
+            //new User { Id = Guid.NewGuid(), Username = "Customer2", FullName = "Customer 2", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer3", FullName = "Customer 3", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer4", FullName = "Customer 4", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer5", FullName = "Customer 5", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer6", FullName = "Customer 6", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer7", FullName = "Customer 7", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer8", FullName = "Customer 8", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer9", FullName = "Customer 9", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer10", FullName = "Customer 10", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer11", FullName = "Customer 11", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer12", FullName = "Customer 12", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer13", FullName = "Customer 13", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer14", FullName = "Customer 14", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId },
+            //new User { Id = Guid.NewGuid(), Username = "Customer15", FullName = "Customer 15", Password = PasswordTools.HashPassword("123456"), PhoneNumber = "123456789", RoleId = customerRoleId }
         );
     }
 

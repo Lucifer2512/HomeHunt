@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Services.Implements
             if (Status.HasValue)
             {
                 posts = await _unitOfWork.Repository<Post>()
-                    .AsQueryable(p => p.Status == Status.Value)
+                    .AsQueryable(p => p.Status == Status.Value && p.Transaction.Status==true)
                     .Include(u => u.User)
                     .Include(u => u.Transaction)
                     .ToListAsync();
@@ -32,7 +32,7 @@ namespace BusinessLogicLayer.Services.Implements
             else
             {
                 posts = await _unitOfWork.Repository<Post>()
-                    .AsQueryable(p => p.Status == Status)
+                    .AsQueryable(p => p.Status == Status && p.Transaction.Status == true)
                     .Include(u => u.User)
                     .Include(u => u.Transaction)
                     .ToListAsync();

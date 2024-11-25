@@ -38,7 +38,7 @@ namespace BusinessLogicLayer.RequestModels
         public string? Description { get; set; } = null!;
         public List<string>? Images { get; set; } = null!;
         public string? BuildingName { get; set; } = null!;
-        public decimal? Price { get; set; } = 0!;
+        public decimal? Price { get; set; }
         public string? Address { get; set; } = null!;
         public string? PropertyType { get; set; } = null!;
         public string? ApartmentNumber { get; set; } = null!;
@@ -50,7 +50,7 @@ namespace BusinessLogicLayer.RequestModels
         public string? LegalDocument { get; set; } = null!;
         public string? FurnitureCondition { get; set; } = null!;
         public string? Area { get; set; } = null!;
-        public decimal? Deposit { get; set; } = 0!;
+        public decimal? Deposit { get; set; }
         public bool? Status { get; set; } = null!;
     }
 }

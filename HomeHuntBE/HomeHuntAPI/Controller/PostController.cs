@@ -168,8 +168,11 @@ namespace HomeHuntAPI.Controller
             if (!string.IsNullOrEmpty(postModel.BuildingName))
             { post.BuildingName = postModel.BuildingName; }
 
-            if (postModel.Price.HasValue)
-            { post.RentPrice = postModel.Price.Value; }
+
+            if (postModel.Price.HasValue && postModel.Price != post.RentPrice)
+            {
+                post.RentPrice = postModel.Price.Value;
+            }
 
             if (!string.IsNullOrEmpty(postModel.Address))
             { post.Address = postModel.Address; }
@@ -204,10 +207,14 @@ namespace HomeHuntAPI.Controller
             if (!string.IsNullOrEmpty(postModel.Area))
             { post.Area = postModel.Area; }
 
-            if (postModel.Deposit.HasValue)
-            { post.Deposit = postModel.Deposit.Value; }
+            if (postModel.Deposit.HasValue && postModel.Deposit != post.Deposit)
+            {
+                post.Deposit = postModel.Deposit.Value;
+            }
 
             post.Status = postModel.Status;
+
+            post.UpdatedDate = DateTime.UtcNow.AddHours(7);
 
             await _postServices.UpdatePostAsync(post);
             return NoContent();
